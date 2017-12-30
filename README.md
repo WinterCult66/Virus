@@ -1,4 +1,3 @@
-## Wintercult
-
->pailas
 # Virus
+
+Nuevo proyecto.
