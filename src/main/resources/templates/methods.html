@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html >
+    <head>
+        <title>Methods</title>
+        <meta charset="utf-8"/>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+        <!-- Custom styles for this template -->
+
+        <link href="/resources/css/products.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/jquery.sweet-modal.min.css" rel="stylesheet" type="text/css"/>
+        <!--<link rel="stylesheet" href="path/to/sweetmodal/dist/min/jquery.sweet-modal.min.css" />-->
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>        
+
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="jumbotron">
+                <p>HELLO, </p>   
+
+                <p>Methods To WebServices. (in Construction)</p>  
+
+            </div>    
+        </div>
+        <div class="container">
+
+            <section>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="list-group">
+                            <a href="" class="list-group-item active blue-bg">
+
+                                <div class="row">
+                                    <div class="col-sm-4"><span class="glyphicon glyphicon-user pull-left"  aria-hidden="true" ></span></div>
+                                    <div class="col-sm-4">
+                                        <h4>
+                                            # LOGIN METHOD
+                                        </h4>
+                                        <p>Login Method</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="white-bg">
+                                <div class="container">
+
+                                    <button type="button" data-toggle="modal" data-target="#modal-1" class="btn button-default custom-button" >Run</button>
+                                    <!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-1">Activate the button</button>-->
+                                </div>
+                                <div class="modal fade" id="modal-1">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h3 class="modal-title">Login Method</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at pharetra sapien. Nulla scelerisque ex eget ligula ornare, vel efficitur quam dictum. Proin malesuada posuere risus suscipit mattis. Suspendisse potenti. Donec et odio nibh. Praesent auctor erat at nunc gravida tincidunt. Ut facilisis, ex ultricies scelerisque aliquam, ex lectus fermentum urna, quis auctor eros ante non dui. 
+                                                <form role="form" action="#" id="myForm" method="post">
+                                                    <!--<input type="hidden" name="${_csrf.parameterName}" value ="${_csrf.token}"/>-->
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1" >Version</label>
+                                                        <input type="text" class="form-control" id="version" name="version" placeholder="Enter Version"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">User</label>
+                                                        <input type="text" class="form-control" id="user" name="user" placeholder="Enter User"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Password</label>
+                                                        <input type="text" class="form-control" id="password" name ="password" placeholder="Enter Password" />
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-lg btn-primary btn-block"  data-toggle="modal" data-target="#modal-1" type="submit" >
+                                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Accept
+                                                        </button>                                                        
+                                                        <button type="button" class="btn btn-lg btn-danger btn-block" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group ">
+                            <a href="" class="list-group-item active purple-bg">
+
+                                <div class="row purple-bg">
+                                    <div class="col-sm-4"><span class="glyphicon glyphicon-music pull-right" aria-hidden="true"></span></div>
+                                    <div class="col-sm-4">
+                                        <h4>
+                                            # LOGOUT METHOD 
+                                        </h4>
+                                        <p>Logout Method</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="white-bg">
+                                <button type="button" data-toggle="modal" data-target="#modal-2" class="btn button-default custom-button" >Run</button>
+                            </div> 
+                            <div class="modal fade" id="modal-2">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Logout Method</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at pharetra sapien. Nulla scelerisque ex eget ligula ornare, vel efficitur quam dictum. Proin malesuada posuere risus suscipit mattis. Suspendisse potenti. Donec et odio nibh. Praesent auctor erat at nunc gravida tincidunt. Ut facilisis, ex ultricies scelerisque aliquam, ex lectus fermentum urna, quis auctor eros ante non dui. 
+                                            <form role="form" action="#" id="myForma" method="post">
+                                                <!--<input type="hidden" name="${_csrf.parameterName}" value ="${_csrf.token}"/>-->
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1" >Version</label>
+                                                    <input type="text" class="form-control" id="version" name="version" placeholder="Enter Version"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">User</label>
+                                                    <input type="text" class="form-control" id="user" name="user" placeholder="Enter User"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Password</label>
+                                                    <input type="text" class="form-control" id="password" name ="password" placeholder="Enter Password" />
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-lg btn-primary btn-block"  data-toggle="modal" data-target="#modal-2" type="submit" >
+                                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Accept
+                                                    </button>                                                        
+                                                    <button type="button" class="btn btn-lg btn-danger btn-block" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group">
+                            <a href="" class="list-group-item active pink-bg">
+
+                                <div class="row">
+                                    <div class="col-sm-4"><span class="glyphicon glyphicon-gift pull-right" aria-hidden="true"></span></div>
+                                    <div class="col-sm-4">
+                                        <h4>
+                                            # SALE METHOD
+                                        </h4>
+                                        <p>Sale Method</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="white-bg">
+                                <button type="button" data-toggle="modal" data-target="#modal-3" class="btn button-default custom-button" >Run</button>
+                            </div>
+                            <div class="modal fade" id="modal-3">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Sale Method</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at pharetra sapien. Nulla scelerisque ex eget ligula ornare, vel efficitur quam dictum. Proin malesuada posuere risus suscipit mattis. Suspendisse potenti. Donec et odio nibh. Praesent auctor erat at nunc gravida tincidunt. Ut facilisis, ex ultricies scelerisque aliquam, ex lectus fermentum urna, quis auctor eros ante non dui. 
+                                            <form role="form">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Version</label>
+                                                    <input type="email" class="form-control"
+                                                           id="version" placeholder="Enter Version"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">TerminalID</label>
+                                                    <input type="email" class="form-control"
+                                                           id="terminal" placeholder="Enter TerminalID"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Clerk</label>
+                                                    <input type="email" class="form-control"
+                                                           id="clerk" placeholder="Enter Clerk"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Product</label>
+                                                    <input type="email" class="form-control"
+                                                           id="product" placeholder="Enter Product"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">PhoneNumber</label>
+                                                    <input type="email" class="form-control"
+                                                           id="phone" placeholder="Enter Phone"/>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
+                                            <a href="" class="btn btn-primary">Download</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <a href="#" th:href ="@{/home}">
+                <button class="btn btn-lg btn-warning btn-block" type="submit"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</button>
+            </a> 
+            <a href="#" th:href ="@{/logout}">
+                <button class="btn btn-lg btn-success btn-block" type="submit"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout</button>
+            </a> 
+            <!-- <a href="#" th:href ="@{/products/productform}">
+                 <button class="btn btn-lg btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Add contact</button>
+             </a> -->
+
+        </div>
+        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="/resources/js/jquery.sweet-modal.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#myForm").submit(function (event) {
+                    console.log("submit");
+                    event.preventDefault();
+//                    console.log($(this).serialize());
+//                    var data = $(this).serialize();
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/methods/api/loginpost",
+                        //data: data
+                        data: {
+                            version: $('#version').val(),
+                            user: $('#user').val(),
+                            password: $('#password').val()
+                        }
+                    })
+                            .done(function (msg) {
+                                $('#modal-1').modal('hide');
+                                $.sweetModal({
+                                    title: 'LOGIN RESPONSE',
+                                    content: msg.data,
+                                    theme: $.sweetModal.THEME_DARK
+                                });
+                            }).success(function (data) {
+                        console.log("EXIOT!!!!! ", data);
+                        console.log(data.data);
+                        var result = $(data.data).find("Version").text();
+                        console.log(result);
+//                           window.location.href = "www.google.com.co";
+                    }).error(function (error) {
+                        console.log(error);
+                    });
+                });
+
+            });
+        </script>
+           <script type="text/javascript">
+            $(document).ready(function () {
+                $("#myForma").submit(function (event) {
+                    console.log("submit");
+                    event.preventDefault();
+//                    console.log($(this).serialize());
+//                    var data = $(this).serialize();
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/methods/api/logoutpost",
+                        //data: data
+                        data: {
+                            version: $('#version').val(),
+                            user: $('#user').val(),
+                            password: $('#password').val()
+                        }
+                    })
+                            .done(function (msg) {
+                                $('#modal-1').modal('hide');
+                                $.sweetModal({
+                                    title: 'LOGOUT RESPONSE',
+                                    content: msg.data,
+                                    theme: $.sweetModal.THEME_DARK
+                                });
+                            }).success(function (data) {
+                        console.log("EXIOT!!!!! ", data);
+                        console.log(data.data);
+                        var result = $(data.data).find("Version").text();
+                        console.log(result);
+//                           window.location.href = "www.google.com.co";
+                    }).error(function (error) {
+                        console.log(error);
+                    });
+                });
+
+            });
+        </script>
+    </body>
+</html> 
+
+
+
+
+
+
+

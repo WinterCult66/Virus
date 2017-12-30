@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
+        <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app"/>
+        <meta name="author" content="PIXINVENT"/>
+        <title>Emida</title>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-touch-fullscreen" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+        <!-- BEGIN VENDOR CSS-->
+
+        <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <!-- font icons-->
+        <link href="/resources/css/icomoon.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/flag-icon.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/pace.css" rel="stylesheet" type="text/css"/>
+        <!-- END VENDOR CSS-->
+        <!-- BEGIN ROBUST CSS-->
+        <link href="/resources/css/bootstrap-extended.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/app.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/colors.css" rel="stylesheet" type="text/css"/>
+        <!-- END ROBUST CSS-->
+        <!-- BEGIN Page Level CSS-->
+        <link href="/resources/css/vertical-menu.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/vertical-overlay-menu.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/palette-gradient.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/palette-gradient.css" rel="stylesheet" type="text/css"/>
+        
+
+
+        <link href="/resources/css/vertical-menu.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+
+<!--        <div class ="container">
+
+            <form class="form-signin" th:action="@{/logincheck}" method="POST">
+                <input type="hidden" name="${_csrf.parameterName}" value ="${_csrf.token}"/>
+                <h2 class ="form-signin-heading"> Sign in!!!!!!!</h2>    
+                <label for="inputEmail" class="sr-only">Username</label>
+                <input type="text" class="form-control" placeholder="Username" name ="username" id ="username"/>
+                <label for="inputPassword" class="sr-only">Passwordd</label>
+                <input type="password" class="form-control" placeholder="Password" name ="password" id ="password"/>
+                <div th:if="${error !=null}" class="alert alert-danger" role="alert">Parameter Invalid</div>                
+                <div th:if="${logout !=null}" class="alert alert-info" role="alert">Logout Success!!!!</div>
+                <button class="btn btn-lg btn btn-danger btn-block" type="submit">
+                    <span class =" glyphicon glyphicon-log-in" aria-hidden="true"></span>Sign In
+                </button>
+            </form>
+        </div>-->
+
+    <div class="app-content content container-fluid">
+        
+      <div class="content-wrapper">
+                <div class="content-header row">
+        </div>
+          
+
+        <div class="content-body"><section class="flexbox-container">
+        <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1  box-shadow-2 p-0">
+        <div>
+                    <div class="card border-grey border-lighten-3 m-0">
+            <div class="card-header no-border">
+
+                <div class="card-title text-xs-center">
+<!--                    <div class="p-1"><img th:src="@{/imgs/emida.png}"/></div>-->
+                </div>
+                <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Login in QA</span></h6>
+            </div>
+            <div class="card-body collapse in">
+                <div class="card-block">
+                    <form class="form-signin" th:action="@{/logincheck}" method="POST">
+                        <input type="hidden" name="${_csrf.parameterName}" value ="${_csrf.token}"/>
+                        <fieldset class="form-group position-relative has-icon-left mb-0">
+                            <input type="text" class="form-control" placeholder="Username" name ="username" id ="username"/>
+                            <div class="form-control-position">
+                                <i class="icon-head"></i>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group position-relative has-icon-left">
+                            <input type="password" class="form-control" placeholder="Password" name ="password" id ="password"/>
+                            <div class="form-control-position">
+                                <i class="icon-key3"></i>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group row">
+                            <div class="col-md-6 col-xs-12 text-xs-center text-md-left">
+                            </div>
+                            
+                        </fieldset>
+                        
+                        <div class="form-group">
+                           <button type="submit" class="btn mb-3 btn-success btn-lg btn-block"><i class="icon-unlock2"></i> Login</button>
+                        </div>
+                        
+                        
+                    </form>
+                    
+                </div>
+                <div th:if="${error !=null}" class="alert alert-danger" role="alert">Parameter Invalid</div>                
+                        <div th:if="${logout !=null}" class="alert alert-info" role="alert">Logout Success!!!!</div>
+            </div>
+           
+        </div>
+        </div>
+            
+        </div>
+           </section> 
+        </div>
+      </div>
+    </div>
+
+            
+    </body>
+</html>

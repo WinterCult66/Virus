@@ -1,0 +1,7 @@
+INSERT INTO user ( username, enable,password )
+   VALUES
+   ( 'user', true,'$2a$10$SIJT53c2sVa.m/PL6gK2N.12Ta/HHxeKMajPa7gJk00F4qB9ehRR2'); //password ) 1234 this Encrypt
+
+INSERT INTO user_role ( username, role)
+   VALUES
+   ( 'user', 'ROLE');
