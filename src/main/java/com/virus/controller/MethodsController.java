@@ -13,13 +13,14 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.google.gson.Gson;
 import com.virus.xmlutil.XmlFormatter;
 import com.virus.constant.ViewConstant;
-import com.virus.entity.AutomationRecordedEntity;
+import com.virus.entity.AutomationRecordedDetailEntity;
+import com.virus.entity.AutomationRecordedItemEntity;
 import com.virus.model.AjaxResponseBody;
-import com.virus.model.AutomationRecorderModel;
+import org.springframework.security.core.userdetails.User;
 import com.virus.model.LoginMethodModel;
 import com.virus.pojos.PojoDynamic;
-import com.virus.repository.AutomationRecordedRepository;
-import com.virus.services.AutomationRecorderService;
+import com.virus.repository.AutomationRecordedDetailRepository;
+import com.virus.repository.AutomationRecordedItemRepository;
 import com.virus.views.Views;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,6 +35,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,13 +53,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/methods")
 public class MethodsController {
 
-      
+    @Autowired
+    private AutomationRecordedDetailRepository automationRecordedDetailRepository;
 
     @Autowired
-    private AutomationRecordedRepository automationRecordedRepository;
-    
-    @Autowired
-    private AutomationRecorderService automationRecorderService;
+    private AutomationRecordedItemRepository automationRecordedItemRepository;
 
     private static final Log LOG = LogFactory.getLog(MethodsController.class);
     XmlFormatter formatter = new XmlFormatter();
@@ -172,8 +172,9 @@ public class MethodsController {
             response.put("success", true);
             response.put("data", xmlresponse);
             return response;*/
-            for (int i = 0; i < 10; i++) {
-                PinDistSaleThread thread = new PinDistSaleThread(language, versionn, terminalid, clerkid, productid, amount, account, i + "");
+            for (int i = 0; i < 1; i++) {
+//                PinDistSaleThread thread = new PinDistSaleThread(language, versionn, terminalid, clerkid, productid, amount, account, i + "");
+                PinDistSaleThread thread = new PinDistSaleThread(language, versionn, terminalid, clerkid, productid, amount, account, invoice);
                 thread.start();
                 Thread.sleep(100);
             }
@@ -414,6 +415,7 @@ public class MethodsController {
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/api/selenium/dynamicform")
     public AjaxResponseBody getValues(@RequestBody List<PojoDynamic> formDynamic) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println("TEST :" + formDynamic.toString());
         String userId = "";
         LOG.info("FROM CONTROLLER TO INSERT FORM");
@@ -422,16 +424,22 @@ public class MethodsController {
         for (int index = 0; index < formDynamic.size(); index++) {
             formDynamics = formDynamic.get(index);
             if (formDynamics != null) {
-                try {                    
-                    AutomationRecordedEntity automationRecordedEntity = new AutomationRecordedEntity(formDynamics.getOptionselect(),
-                    formDynamics.getDivxpath(), formDynamics.getValuetosend(), uniqueID);
-                    automationRecordedRepository.save(automationRecordedEntity);                    
-                    automationRecorderService.listAllRecorders();                    
-                    LOG.info("INSERT SUCCESS");
+                try {
+                    AutomationRecordedDetailEntity automationRecordedDetailEntity = new AutomationRecordedDetailEntity(formDynamics.getOptionselect(),
+                            formDynamics.getDivxpath(), formDynamics.getValuetosend(), uniqueID);
+                    automationRecordedDetailRepository.save(automationRecordedDetailEntity);
+                    LOG.info("INSERT SUCCESS DETAIL");
                 } catch (Exception ex) {
-                    System.out.println("ERROR FAIL INSERT + EXCEPTION {0}" + ex.toString());
+                    LOG.error("ERROR FAIL INSERT + EXCEPTION {0}" + ex.toString());
                 }
             }
+        }
+        try {
+            AutomationRecordedItemEntity automationRecordedItemEntity = new AutomationRecordedItemEntity("TEST1", "description 1", uniqueID, user.getUsername());
+            automationRecordedItemRepository.save(automationRecordedItemEntity);
+            LOG.info("INSERT SUCCESS ITEM");
+        } catch (Exception ex) {
+            LOG.error("ERROR FAIL INSERT + EXCEPTION {0}" + ex.toString());
         }
         return null;
     }

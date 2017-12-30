@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -30,17 +32,6 @@ public class Userr {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<UserRole> userRole = new HashSet<UserRole>();
 
-    @Transient
-    private boolean isAccountNonExpired;
-
-    @Transient
-    private boolean isAccountNonLocked;
-
-    @Transient
-    private boolean isCredentialsNonExpired;
-
-    @Transient
-    private boolean isEnabled;
 
     @Transient
     Collection<? extends GrantedAuthority> authorities;
@@ -58,17 +49,6 @@ public class Userr {
         this.password = password;
         this.enable = enable;
         this.userRole = userRole;
-    }
-
-    public Userr(String username, String password, boolean enable, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled, Collection<? extends GrantedAuthority> authorities) {
-        this.username = username;
-        this.password = password;
-        this.enable = enable;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
-        this.authorities = authorities;
     }
 
     public Userr() {
@@ -106,4 +86,5 @@ public class Userr {
     public void setUserRole(Set<UserRole> userRole) {
         this.userRole = userRole;
     }
+    
 }

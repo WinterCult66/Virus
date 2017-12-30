@@ -61,5 +61,7 @@ public class Home {
     public String loginSimple() {
         return "addlogin";
     }
+    
+    
 
 }

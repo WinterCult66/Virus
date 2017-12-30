@@ -15,20 +15,21 @@ import javax.validation.constraints.NotNull;
  *
  * @author krodriguez
  */
-@Entity(name = "AutomationRecordedEntity")
-public class AutomationRecordedEntity {
+@Entity(name = "automationrecordeddetail")
+public class AutomationRecordedDetailEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    
     private Integer id;
-    @NotNull
+    
     private String optionselect;
-    @NotNull
+    
     private String divxpath;
-    @NotNull
+    
     private String valuetosend;
-    @NotNull
-    private String categoryidnew;
+    
+    private String keyitemari;
 
     public Integer getId() {
         return id;
@@ -62,24 +63,22 @@ public class AutomationRecordedEntity {
         this.valuetosend = valuetosend;
     }
 
-    public String getCategoryidnew() {
-        return categoryidnew;
+    public String getKeyitemari() {
+        return keyitemari;
     }
 
-    public void setCategoryidnew(String categoryidnew) {
-        this.categoryidnew = categoryidnew;
+    public void setKeyitemari(String keyitemari) {
+        this.keyitemari = keyitemari;
     }
 
-    public AutomationRecordedEntity(String optionselect, String divxpath, String valuetosend, String categoryidnew) {
+    public AutomationRecordedDetailEntity(String optionselect, String divxpath, String valuetosend, String keyitemari) {
         this.optionselect = optionselect;
         this.divxpath = divxpath;
         this.valuetosend = valuetosend;
-        this.categoryidnew = categoryidnew;
+        this.keyitemari = keyitemari;
     }
 
-    public AutomationRecordedEntity() {
+    public AutomationRecordedDetailEntity() {
     }
-
-    
 
 }

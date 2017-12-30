@@ -10,6 +10,8 @@ import com.virus.pojos.AddLoginPojo;
 import com.virus.repository.UserRepository;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,19 +20,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author Kevin
  */
+@Controller
 public class AddLoginController {
     
     @Autowired
     UserRepository userRepository;
     
-    @PostMapping("/addlogin")
-        @ResponseBody
+    @PostMapping("/api/addlogin")
+    @ResponseBody
     public Map seleniumApiPaymentRequest(AddLoginPojo addLoginPojo) {
-        System.out.println("pojo add : " + addLoginPojo.toString());
-        
-        Userr userr = new Userr("", "", true);
-        
-        userRepository.save(userr);
+        try {
+            System.out.println("pojo add : " + addLoginPojo.toString());
+            BCryptPasswordEncoder pe = new BCryptPasswordEncoder();            
+            Userr userr = new Userr(addLoginPojo.getUsername(), pe.encode(addLoginPojo.getPassword()), true);            
+            userRepository.save(userr);
+            System.out.println("INSERT SUCCESS");
+        } catch (Exception ex) {
+            System.out.println("EX : " + ex);
+        }
         return null;
     }
     
