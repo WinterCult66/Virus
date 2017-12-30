@@ -21,6 +21,7 @@ import com.virus.model.LoginMethodModel;
 import com.virus.pojos.PojoDynamic;
 import com.virus.repository.AutomationRecordedDetailRepository;
 import com.virus.repository.AutomationRecordedItemRepository;
+import com.virus.repository.QueryDSL;
 import com.virus.views.Views;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -58,6 +59,9 @@ public class MethodsController {
 
     @Autowired
     private AutomationRecordedItemRepository automationRecordedItemRepository;
+    
+    @Autowired
+    private QueryDSL  queryDSL;
 
     private static final Log LOG = LogFactory.getLog(MethodsController.class);
     XmlFormatter formatter = new XmlFormatter();
@@ -441,6 +445,8 @@ public class MethodsController {
         } catch (Exception ex) {
             LOG.error("ERROR FAIL INSERT + EXCEPTION {0}" + ex.toString());
         }
+        
+        queryDSL.find();
         return null;
     }
 
