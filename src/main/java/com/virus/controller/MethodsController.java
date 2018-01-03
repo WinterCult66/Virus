@@ -446,7 +446,9 @@ public class MethodsController {
             LOG.error("ERROR FAIL INSERT + EXCEPTION {0}" + ex.toString());
         }
         
-        queryDSL.find();
+        //queryDSL.findByUser(user.getUsername());
+        //queryDSL.findByKey(uniqueID);
+        queryDSL.getResultByUser(user.getUsername());
         return null;
     }
 

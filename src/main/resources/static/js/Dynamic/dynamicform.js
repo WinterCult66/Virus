@@ -107,6 +107,7 @@ $(document).ready(function () {
     $("#upload").on("click", function () {
         console.log(dataJson);
         var JSONKey = JSON.stringify(dataJson).replace("[", "").replace("]", "");
+        console.log(JSONKey);
         if (dataJson !== undefined) {
             $('.ajax-loading').show(10);
             $.ajax({

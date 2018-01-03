@@ -56,11 +56,11 @@ public class Home {
     public String test() {
         return "test";
     }
-
-    @GetMapping("/home/addlogin")
-    public String loginSimple() {
-        return "addlogin";
-    }
+//
+//    @GetMapping("/home/addlogin")
+//    public String loginSimple() {
+//        return "addlogin";
+//    }
     
     
 
