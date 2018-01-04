@@ -29,6 +29,7 @@ public class QueryDSL {
     private QUserr qUserr = QUserr.userr;
     private QAutomationRecordedDetailEntity qAutDetail = QAutomationRecordedDetailEntity.automationRecordedDetailEntity;
     private QAutomationRecordedItemEntity qAutItem = QAutomationRecordedItemEntity.automationRecordedItemEntity;
+    
 
     @PersistenceContext
     private EntityManager em;
@@ -42,26 +43,27 @@ public class QueryDSL {
         //List <Userr> listUser = query.select(qUserr).from(qUserr).where(qUserr.username.eq(user)).fetch();  
     }
 
-    public List<Tuple> findByKey(String key) {
+    public List<Tuple> getResultByKey(String key) {
 
         JPAQuery<AutomationRecordedDetailEntity> query = new JPAQuery<AutomationRecordedDetailEntity>(em);
         List<Tuple> listDetailRecorded = query.select(qAutDetail.divxpath, qAutDetail.optionselect, qAutDetail.valuetosend)
                 .from(qAutDetail)
                 .where(qAutDetail.keyitemari
-                        .eq(key))
+                .eq(key))
                 .fetch();
         return listDetailRecorded;
     }
 
     public List<Tuple> getResultByUser(String userName) {
         JPAQuery<QAutomationRecordedItemEntity> query = new JPAQuery<QAutomationRecordedItemEntity>(em);
-        List<Tuple> listItemRecorded = query.select(qAutItem.descriptionitem, qAutItem.nameitem,qAutItem.keyari)
+        List<Tuple> listItemRecorded = query.select(qAutItem.descriptionitem, qAutItem.nameitem, qAutItem.keyari)
                 .from(qAutItem)
                 .where(qAutItem.user
                 .eq(userName))
-                .fetch();
-        System.out.println("USER : " + listItemRecorded);
+                .fetch();        
         return listItemRecorded;
 
     }
+    
+
 }
