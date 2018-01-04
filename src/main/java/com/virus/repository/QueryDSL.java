@@ -55,10 +55,10 @@ public class QueryDSL {
 
     public List<Tuple> getResultByUser(String userName) {
         JPAQuery<QAutomationRecordedItemEntity> query = new JPAQuery<QAutomationRecordedItemEntity>(em);
-        List<Tuple> listItemRecorded = query.select(qAutItem.descriptionitem, qAutItem.nameitem)
+        List<Tuple> listItemRecorded = query.select(qAutItem.descriptionitem, qAutItem.nameitem,qAutItem.keyari)
                 .from(qAutItem)
                 .where(qAutItem.user
-                        .eq(userName))
+                .eq(userName))
                 .fetch();
         System.out.println("USER : " + listItemRecorded);
         return listItemRecorded;
