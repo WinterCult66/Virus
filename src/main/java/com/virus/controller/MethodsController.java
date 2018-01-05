@@ -59,9 +59,9 @@ public class MethodsController {
 
     @Autowired
     private AutomationRecordedItemRepository automationRecordedItemRepository;
-    
+
     @Autowired
-    private QueryDSL  queryDSL;
+    private QueryDSL queryDSL;
 
     private static final Log LOG = LogFactory.getLog(MethodsController.class);
     XmlFormatter formatter = new XmlFormatter();
@@ -429,8 +429,17 @@ public class MethodsController {
             formDynamics = formDynamic.get(index);
             if (formDynamics != null) {
                 try {
-                    AutomationRecordedDetailEntity automationRecordedDetailEntity = new AutomationRecordedDetailEntity(formDynamics.getOptionselect(),
-                            formDynamics.getDivxpath(), formDynamics.getValuetosend(), uniqueID);
+            String option = formDynamics.getOptionselect();
+                    System.out.println("OPTION : " + option);
+                    AutomationRecordedDetailEntity automationRecordedDetailEntity = null;                    
+                    if (formDynamics.getOptionselect().equals("3")) {
+                        automationRecordedDetailEntity = new AutomationRecordedDetailEntity(formDynamics.getOptionselect(),
+                                formDynamics.getValuetosend(), formDynamics.getDivxpath(), uniqueID);
+                    } else {
+                        automationRecordedDetailEntity = new AutomationRecordedDetailEntity(formDynamics.getOptionselect(),
+                                formDynamics.getDivxpath(), formDynamics.getValuetosend(), uniqueID);
+                    }
+
                     automationRecordedDetailRepository.save(automationRecordedDetailEntity);
                     LOG.info("INSERT SUCCESS DETAIL");
                 } catch (Exception ex) {
@@ -445,7 +454,7 @@ public class MethodsController {
         } catch (Exception ex) {
             LOG.error("ERROR FAIL INSERT + EXCEPTION {0}" + ex.toString());
         }
-        
+
         //queryDSL.findByUser(user.getUsername());
         //queryDSL.findByKey(uniqueID);
         queryDSL.getResultByUser(user.getUsername());
