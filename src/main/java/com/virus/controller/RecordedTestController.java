@@ -9,8 +9,12 @@ import com.emida.selenium.SeleniumRecordedTest;
 import com.google.gson.Gson;
 import com.querydsl.core.Tuple;
 import com.virus.constant.ViewConstant;
+import static com.virus.util.Util.listFolder;
+import static com.virus.util.Util.folderNumberAleatory;
 import com.virus.repository.QueryDSL;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,24 +61,22 @@ public class RecordedTestController {
     }
 
     @RequestMapping("/processrecords/{id}")
-    public String processRecords(@PathVariable String id) {
+    public Map processRecords(@PathVariable String id) {
         LOG.info("Enter to Method to Proccess Test Recorded");
+        Map<String, Object> responseImg = new LinkedHashMap();
         try {
+            String fromMethodFolder = (folderNumberAleatory());
             List<Tuple> query = queryDSL.getResultByKey(id);
-            seleniumRecordedTest.ReadRecordeds(query, "D:\\Images\\img", ViewConstant.SELENIUM_FOLDER);
+            seleniumRecordedTest.ReadRecordeds(query, fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+            List<String> a = listFolder(fromMethodFolder);
+            responseImg.put("gs", a.toString());
+            System.out.println(a.toString());
 
-//            for (Tuple item : query) {
-//                
-//                Object xpath = item.toArray()[0];
-//                Object option = item.toArray()[1];
-//                Object value = item.toArray()[2];
-//                
-//            }
         } catch (Exception ex) {
             LOG.error("ERROR IN PROCCESS RECORDS " + ex);
         }
 
-        return null;
+        return responseImg;
     }
 
 }
