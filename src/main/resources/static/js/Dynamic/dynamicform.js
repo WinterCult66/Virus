@@ -88,8 +88,7 @@ $(document).ready(function () {
             var getColor = arrayColors(numberRandom());
             var tr = "<tr class=" + getColor + "><td scope='row'>" + count + "</td><td>" + valueExitSelectText + "</td>a<td>" + a + "</td><td>" + getValue + "</td><td><button value = " + count + " type='button' class='btn btn-black remove'><i class='icon-emoticon25'></i> </button></td></tr>";
             $("#tableDynamic").append(tr);
-            dataJson = getValueFromForm(valueExitSelectVal, a, getValue);
-            console.log(dataJson);
+            dataJson = getValueFromForm(valueExitSelectVal, a, getValue);            
         }
     });
 
@@ -106,15 +105,14 @@ $(document).ready(function () {
     });
     $("#upload").on("click", function () {
         console.log(dataJson);
-        var JSONKey = JSON.stringify(dataJson).replace("[", "").replace("]", "");
-        console.log(JSONKey);
+        var JSONKey = JSON.stringify(dataJson);        
         if (dataJson !== undefined) {
             $('.ajax-loading').show(10);
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
                 url: "/methods/api/selenium/dynamicform",
-                data: "[" + JSONKey + "]",
+                data: JSONKey,
                 dataType: 'json',
                 timeout: 100000
             }).success(function () {
