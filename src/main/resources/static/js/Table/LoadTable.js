@@ -40,15 +40,22 @@ $(document).ready(function () {
 
 
     $(".card-body").on("click", function () {
-        var id = ($(this).prop("id"));        
+        var id = ($(this).prop("id"));
         if (id !== undefined && id !== null) {
-            $('.ajax-loading').show(10);
-            $('.ajax-loading').show(10);
+            $('.ajax-loading').show(10);            
             $.ajax({
                 type: "POST",
-                url: "/records/processrecords/"+id,
+                url: "/records/processrecords/" + id,
                 timeout: 100000
             }).success(function () {
+                console.log("SUCCESS");
+            }).done(function (msg) {
+                $("#question").html("");
+                $("#automationImages").html("");
+                $("#ol").html("").empty();
+                graphicsImages.DrawGraphic(msg);
+                $('#modal-2').modal('show');
+                msg.gs = null;
                 $('.ajax-loading').hide(1);
             }).error(function (error) {
                 console.log(error);
