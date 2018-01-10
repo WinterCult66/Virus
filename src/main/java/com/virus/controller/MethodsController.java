@@ -40,6 +40,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -417,8 +418,12 @@ public class MethodsController {
     }
 
     @JsonView(Views.Public.class)
-    @RequestMapping(value = "/api/selenium/dynamicform")
-    public AjaxResponseBody getValues(@RequestBody List<PojoDynamic> formDynamic) {
+    @RequestMapping(value = "/api/selenium/dynamicform/{nameParam}//{test}")
+    public AjaxResponseBody getValues(@RequestBody List<PojoDynamic> formDynamic, @PathVariable String nameParam,@PathVariable String test) {
+        
+        System.out.println("Name : "+nameParam);
+        System.out.println("Desc : "+test);
+        
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println("TEST :" + formDynamic.toString());
         String userId = "";

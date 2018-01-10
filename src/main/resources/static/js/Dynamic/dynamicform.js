@@ -105,13 +105,15 @@ $(document).ready(function () {
     });
     $("#upload").on("click", function () {
         console.log(dataJson);
-        var JSONKey = JSON.stringify(dataJson);        
+        var JSONKey = JSON.stringify(dataJson);
+        var nameTest = "Prueba1";
+        var descTest = "Desc1";
         if (dataJson !== undefined) {
             $('.ajax-loading').show(10);
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/methods/api/selenium/dynamicform",
+                url: "/methods/api/selenium/dynamicform/"+nameTest+"/"+descTest,
                 data: JSONKey,
                 dataType: 'json',
                 timeout: 100000
