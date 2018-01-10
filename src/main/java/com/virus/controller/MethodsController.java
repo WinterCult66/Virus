@@ -418,12 +418,12 @@ public class MethodsController {
     }
 
     @JsonView(Views.Public.class)
-    @RequestMapping(value = "/api/selenium/dynamicform/{nameParam}//{test}")
-    public AjaxResponseBody getValues(@RequestBody List<PojoDynamic> formDynamic, @PathVariable String nameParam,@PathVariable String test) {
-        
-        System.out.println("Name : "+nameParam);
-        System.out.println("Desc : "+test);
-        
+    @RequestMapping(value = "/api/selenium/dynamicform/{nameParam}//{descParam}")
+    public AjaxResponseBody getValues(@RequestBody List<PojoDynamic> formDynamic, @PathVariable String nameParam, @PathVariable String descParam) {
+
+        System.out.println("Name : " + nameParam);
+        System.out.println("Desc : " + descParam);
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println("TEST :" + formDynamic.toString());
         String userId = "";
@@ -434,9 +434,9 @@ public class MethodsController {
             formDynamics = formDynamic.get(index);
             if (formDynamics != null) {
                 try {
-            String option = formDynamics.getOptionselect();
+                    String option = formDynamics.getOptionselect();
                     System.out.println("OPTION : " + option);
-                    AutomationRecordedDetailEntity automationRecordedDetailEntity = null;                    
+                    AutomationRecordedDetailEntity automationRecordedDetailEntity = null;
                     if (formDynamics.getOptionselect().equals("3")) {
                         automationRecordedDetailEntity = new AutomationRecordedDetailEntity(formDynamics.getOptionselect(),
                                 formDynamics.getValuetosend(), formDynamics.getDivxpath(), uniqueID);
@@ -453,7 +453,7 @@ public class MethodsController {
             }
         }
         try {
-            AutomationRecordedItemEntity automationRecordedItemEntity = new AutomationRecordedItemEntity("TEST1", "description 1", uniqueID, user.getUsername());
+            AutomationRecordedItemEntity automationRecordedItemEntity = new AutomationRecordedItemEntity(nameParam, descParam, uniqueID, user.getUsername());
             automationRecordedItemRepository.save(automationRecordedItemEntity);
             LOG.info("INSERT SUCCESS ITEM");
         } catch (Exception ex) {
