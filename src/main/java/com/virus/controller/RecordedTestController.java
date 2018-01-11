@@ -130,4 +130,17 @@ public class RecordedTestController {
         return responseImg;
     }
 
+    @RequestMapping("/deleterecords/{id}")
+    public Map deleteRecords(@PathVariable String id) {
+        LOG.info("Enter to Method to Delete Records");
+        Map<String, Object> responseImg = new LinkedHashMap();
+        try {
+            
+        } catch (Exception ex) {
+            LOG.error("ERROR IN PROCCESS RECORDS " + ex);
+        }
+
+        return responseImg;
+    }
+
 }

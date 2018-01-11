@@ -56,9 +56,18 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#" th:href="@{/home/doit}">Do It Yourself</a>
-                                </li>
-                                <li><a href="/records/showrecorded">Records</a>
+<!--                                <li class="disabled"><a href="#" th:href="@{/home/doit}">Do It Yourself</a>
+                                </li>-->
+                                <li><a data-i18n="nav.menu_levels.second_level_child.main" class="menu-item" href="/records/showrecorded">Do It Yourself <span class="tag tag tag-info tag-pill float-xs-right mr-2">2</span></a>
+                                    <ul class="menu-content">
+                                        <li>
+                                            <a href="#" th:href="@{/records/addrecords}"  data-i18n="nav.menu_levels.second_level_child.third_level" class="menu-item">Add Records                                                
+                                            </a>
+                                        </li>
+                                        <li><a href="#" th:href="@{/records/showrecorded}"  data-i18n="nav.menu_levels.second_level_child.third_level" class="menu-item">Show Records                                                
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                                 <li class="disabled"><a href="" data-i18n="nav.dash.main" class="menu-item">Intranet</a>
                                 </li>

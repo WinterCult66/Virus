@@ -16,6 +16,7 @@ public class ViewConstant {
     public static final String METHODS = "methods";
     public static final String SELENIUM = "methodsemida";
     public static final String SHOWRECORDS = "showrecords";
+    public static final String ADDRECORDS = "addrecords";
     
     
     //////PATH'S

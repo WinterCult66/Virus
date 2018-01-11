@@ -10,8 +10,7 @@ $(document).ready(function () {
     var json = JSON.parse(list);
     $.each(json, function (i) {
         var getColor = arrayColors(numberRandom());
-        var getIcon = arrayIcon(numberRandom());
-        var dataCard = "<div  class='col-xl-3 col-lg-6 col-xs-12'><a><div class='card " + getColor + "'><div id =" + json[i].a[2] + " class='card-body' ><div class='card-block'><div class='media'><div class='media-left media-middle'><i class='" + getIcon + " white font-large-2 float-xs-left'></i></div><div class='media-body white text-xs-right'><h3>" + json[i].a[1] + "</h3><span>" + json[i].a[0] + "</span></div></div></div></div></div></a></div> ";
+        var dataCard = "<div  class='col-xl-3 col-lg-6 col-xs-12'><div class='card " + getColor + "'><div class='card-body' ><div class='card-block'><div class='media'><div class='media-left media-middle'><div clas= 'col-md-2 clickPlay'><a><i id =" + json[i].a[2] + " class='icon-play3 white font-large-1 float-xs-left'></i></a></div><div class ='col-md-2'><a><i id =d" + json[i].a[2] + " class=' icon-bin white font-large-1 float-xs-left'></i></a></div></div><div class='media-body white text-xs-right'><h3>" + json[i].a[1] + "</h3><span>" + json[i].a[0] + "</span></div></div></div></div></div></div> ";
         $("#cardDynamic").append(dataCard);
     });
 
@@ -24,28 +23,16 @@ $(document).ready(function () {
         ];
         return colors[position];
     }
-
-    function arrayIcon(position) {
-        var icon = ["icon-clubs",
-            "icon-diamonds",
-            "icon-spades",
-            "icon-heart3",
-            "icon-pacman"
-        ];
-        return icon[position];
-    }
-
     function numberRandom() {
         var colorPosition;
         colorPosition = Math.round((Math.random() * 4));
         return colorPosition;
     }
 
-
-    $(".card-body").on("click", function () {
+    $(".icon-play3").on("click", function () {
         var id = ($(this).prop("id"));
         if (id !== undefined && id !== null) {
-            $('.ajax-loading').show(10);            
+            $('.ajax-loading').show(10);
             $.ajax({
                 type: "POST",
                 url: "/records/processrecords/" + id,
@@ -64,10 +51,32 @@ $(document).ready(function () {
                 console.log(error);
             });
         }
+    });
 
+
+    $(".icon-bin").on("click", function () {
+        var id = ($(this).prop("id"));
+        var idSub = id.substring(1);
+
+        if (idSub !== undefined && id !== null) {
+            $('.ajax-loading').show(10);
+            $.ajax({
+                type: "POST",
+                url: "/records/deleterecords/" + idSub,
+                timeout: 10000
+            }).success(function () {
+                console.log("DELTE SUCCES");
+            }).error(function (error) {
+                console.log("ERROR : " + error);
+            });
+
+        }
     });
 
 
 
+
+
 });
+
 

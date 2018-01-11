@@ -11,6 +11,8 @@ $(document).ready(function () {
     $("#3").hide();
     $("#4").hide();
     $("#5").hide();
+    //$("#headerTable").hide();
+    $("#formD").hide();
     //End Variables Hide
     selectChange();
     //START OPEN MODAL
@@ -19,11 +21,9 @@ $(document).ready(function () {
     //END OPEN MODAL
     //SAVE TABLE START
     $("#saveTable").click(function () {
-
         var valueExit = selectChange();
         var valueExitSelectVal = valueExit[0];
         var valueExitSelectText = valueExit[1];
-
         if (valueExitSelectVal == undefined) {
             toastr.error('Select A Option');
             toastr.options = {
@@ -88,7 +88,9 @@ $(document).ready(function () {
             var getColor = arrayColors(numberRandom());
             var tr = "<tr class=" + getColor + "><td scope='row'>" + count + "</td><td>" + valueExitSelectText + "</td>a<td>" + a + "</td><td>" + getValue + "</td><td><button value = " + count + " type='button' class='btn btn-black remove'><i class='icon-emoticon25'></i> </button></td></tr>";
             $("#tableDynamic").append(tr);
-            dataJson = getValueFromForm(valueExitSelectVal, a, getValue);            
+            //$("#headerTable").show();
+            $("#formD").show();
+            dataJson = getValueFromForm(valueExitSelectVal, a, getValue);
         }
     });
 
@@ -104,16 +106,25 @@ $(document).ready(function () {
         console.log(JSON.stringify(dataJson));
     });
     $("#upload").on("click", function () {
-        console.log(dataJson);
-        var JSONKey = JSON.stringify(dataJson);
+
         var nameParam = $("#nametest").val();
         var descParam = $("#descriptiontest").val();
+        if (nameParam === "" || descParam === "") {
+            toastr.error('Name or Description Empty');
+            toastr.options = {
+                "closeButton": true
+            };
+            return false;
+        }
+
+
+        var JSONKey = JSON.stringify(dataJson);
         if (dataJson !== undefined) {
             $('.ajax-loading').show(10);
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/records/saverecords/"+nameParam+"/"+descParam,
+                url: "/records/saverecords/" + nameParam + "/" + descParam,
                 data: JSONKey,
                 dataType: 'json',
                 timeout: 100000

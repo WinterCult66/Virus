@@ -7,7 +7,7 @@
         <meta name="description" content="Robust admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities."/>
         <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app"/>
         <meta name="author" content="PIXINVENT"/>
-        <title>Do-It</title>
+        <title>Add Records</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="apple-touch-fullscreen" content="yes"/>
         <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
@@ -56,7 +56,7 @@
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-6 col-xs-12 mb-1">
-                    <h2 id="kevin" class="content-header-title">Do It To Emida</h2>
+                    <h2 id="kevin" class="content-header-title">Add Records</h2>
                 </div>
                 <div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
                     <div class="breadcrumb-wrapper col-xs-12">
@@ -69,16 +69,18 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header" id ="headerTable">
                             <!--                            <h4 class="card-title">Contextual classes</h4>
                                                         <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>-->
                             <h4 class="card-title col-md-4">Insert Name And Description</h4>
+                            <form id="formNameDescription">
                             <div class="main-menu-header  col-md-4 text-danger">
-                                <input type="text" name ="nametest" id ="nametest" placeholder="Name Test" maxlength="20" class="menu-search form-control round" size="4"/>                                
+                                <input type="text" required="required" name ="nametest" id ="nametest" placeholder="Name Test" maxlength="20" class="menu-search form-control round" size="4"/>                                
                             </div>
                             <div class="main-menu-header  col-md-4 text-danger">
-                                <input type="text" name ="descriptiontest" id ="descriptiontest" placeholder="Description Test" maxlength="20" class="menu-search form-control round" size="4"/>
+                                <input type="text" required="required" name ="descriptiontest" id ="descriptiontest" placeholder="Description Test" maxlength="20" class="menu-search form-control round" size="4"/>
                             </div>
+                            </form>
                         </div>
                         <form id ="formD" name="formD">
                             <div class="card-body collapse in">   

@@ -51,17 +51,11 @@ public class Home {
         return "doit";
     }
 
-    //MAPPING TEST
-    @GetMapping("/home/test")
-    public String test() {
-        return "test";
+    @GetMapping("/records/addrecords")
+    public String addrecords() {
+        return ViewConstant.ADDRECORDS;
     }
-//
-//    @GetMapping("/home/addlogin")
-//    public String loginSimple() {
-//        return "addlogin";
-//    }
-    
+
     
 
 }
