@@ -19,7 +19,9 @@ $(document).ready(function () {
         var colors = ["bg-success",
             "bg-black",
             "bg-danger",
-            "bg-info"];
+            "bg-info",
+            "bg-purple"
+        ];
         return colors[position];
     }
 
@@ -27,14 +29,15 @@ $(document).ready(function () {
         var icon = ["icon-clubs",
             "icon-diamonds",
             "icon-spades",
-            "icon-heart3"
+            "icon-heart3",
+            "icon-pacman"
         ];
         return icon[position];
     }
 
     function numberRandom() {
         var colorPosition;
-        colorPosition = Math.round((Math.random() * 3));
+        colorPosition = Math.round((Math.random() * 4));
         return colorPosition;
     }
 
