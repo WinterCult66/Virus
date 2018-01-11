@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Kevin
  */
 public class Util {
-    
+
     private static final Log LOG = LogFactory.getLog(ContactController.class);
 
     public static String folderNumberAleatory() {
@@ -52,7 +52,4 @@ public class Util {
         }
         return imagesList;
     }
-    
-    
-
 }

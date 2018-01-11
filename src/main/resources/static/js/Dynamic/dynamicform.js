@@ -113,7 +113,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/methods/api/selenium/dynamicform/"+nameParam+"/"+descParam,
+                url: "/records/saverecords/"+nameParam+"/"+descParam,
                 data: JSONKey,
                 dataType: 'json',
                 timeout: 100000

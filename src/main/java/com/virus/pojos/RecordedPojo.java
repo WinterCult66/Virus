@@ -1,6 +1,15 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.virus.pojos;
 
-public class PojoDynamic {
+/**
+ *
+ * @author krodriguez
+ */
+public class RecordedPojo {
 
     private String optionselect;
     private String divxpath;
@@ -32,7 +41,7 @@ public class PojoDynamic {
 
     @Override
     public String toString() {
-        return "PojoDynamic{" + "optionselect=" + optionselect + ", divxpath=" + divxpath + ", valuetosend=" + valuetosend + '}';
+        return "RecordedPojo{" + "optionselect=" + optionselect + ", divxpath=" + divxpath + ", valuetosend=" + valuetosend + '}';
     }
 
 }

@@ -6,32 +6,50 @@
 package com.virus.controller;
 
 import com.emida.selenium.SeleniumRecordedTest;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.google.gson.Gson;
 import com.querydsl.core.Tuple;
 import com.virus.constant.ViewConstant;
+import com.virus.entity.AutomationRecordedDetailEntity;
+import com.virus.entity.AutomationRecordedItemEntity;
+import com.virus.model.AjaxResponseBody;
+import com.virus.pojos.RecordedPojo;
+import com.virus.repository.AutomationRecordedDetailRepository;
+import com.virus.repository.AutomationRecordedItemRepository;
 import static com.virus.util.Util.listFolder;
 import static com.virus.util.Util.folderNumberAleatory;
 import com.virus.repository.QueryDSL;
+import com.virus.views.Views;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author krodriguez
  */
+@Controller
 @RestController
 @RequestMapping("/records")
 public class RecordedTestController {
+
+    @Autowired
+    private AutomationRecordedDetailRepository automationRecordedDetailRepository;
+
+    @Autowired
+    private AutomationRecordedItemRepository automationRecordedItemRepository;
 
     @Autowired
     private QueryDSL queryDSL;
@@ -39,6 +57,44 @@ public class RecordedTestController {
     private static final Log LOG = LogFactory.getLog(ContactController.class);
 
     public SeleniumRecordedTest seleniumRecordedTest = new SeleniumRecordedTest();
+
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/saverecords/{nameParam}//{descParam}")
+    public AjaxResponseBody getValues(@RequestBody List<RecordedPojo> recordedPojo, @PathVariable String nameParam, @PathVariable String descParam) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        LOG.info("Data to Proccess " + recordedPojo.toString());
+        String userId = "";
+        LOG.info("Enter to Method to Save Test Recorded");
+        String uniqueID = UUID.randomUUID().toString();
+        RecordedPojo saveRecordedPojo = new RecordedPojo();
+        for (int index = 0; index < recordedPojo.size(); index++) {
+            saveRecordedPojo = recordedPojo.get(index);
+            if (saveRecordedPojo != null) {
+                try {
+                    AutomationRecordedDetailEntity automationRecordedDetailEntity = null;
+                    if (saveRecordedPojo.getOptionselect().equals("3")) {
+                        automationRecordedDetailEntity = new AutomationRecordedDetailEntity(saveRecordedPojo.getOptionselect(),
+                                saveRecordedPojo.getValuetosend(), saveRecordedPojo.getDivxpath(), uniqueID);
+                    } else {
+                        automationRecordedDetailEntity = new AutomationRecordedDetailEntity(saveRecordedPojo.getOptionselect(),
+                                saveRecordedPojo.getDivxpath(), saveRecordedPojo.getValuetosend(), uniqueID);
+                    }
+                    automationRecordedDetailRepository.save(automationRecordedDetailEntity);
+                    LOG.info("INSERT SUCCESS DETAIL");
+                } catch (Exception ex) {
+                    LOG.error("ERROR FAIL INSERT DETAIL + EXCEPTION {0}" + ex.toString());
+                }
+            }
+        }
+        try {
+            AutomationRecordedItemEntity automationRecordedItemEntity = new AutomationRecordedItemEntity(nameParam, descParam, uniqueID, user.getUsername());
+            automationRecordedItemRepository.save(automationRecordedItemEntity);
+            LOG.info("INSERT SUCCESS ITEM");
+        } catch (Exception ex) {
+            LOG.error("ERROR FAIL INSERT ITEM + EXCEPTION {0}" + ex.toString());
+        }
+        return null;
+    }
 
     @GetMapping("/showrecorded")
     public ModelAndView showRecords() {
@@ -48,12 +104,11 @@ public class RecordedTestController {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<Tuple> query = queryDSL.getResultByUser(user.getUsername());
             String json = new Gson().toJson(query);
-            mav.addObject("kevin", json);
+            mav.addObject("jsonList", json);
         } catch (Exception ex) {
             LOG.error("ERROR IN SHOWRECORDED " + ex);
         }
         return mav;
-
     }
 
     @RequestMapping("/processrecords/{id}")

@@ -11,12 +11,9 @@ import com.virus.entity.AutomationRecordedDetailEntity;
 import com.virus.entity.QAutomationRecordedDetailEntity;
 import com.virus.entity.QAutomationRecordedItemEntity;
 import com.virus.entity.QUserr;
-import com.virus.entity.Userr;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import net.minidev.json.JSONArray;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -35,12 +32,7 @@ public class QueryDSL {
     private EntityManager em;
 
     public void findByUser(String user) {
-        //JPAQuery<Userr> query = new JPAQuery<Userr>(em);
-        //Tuple list =  query.select(qUserr.username,qUserr.password).from(qUserr).fetchOne();
-        //System.out.println("list : " + list);    
-        //Userr userr1 = query.select(qUserr).from(qUserr).where(qUserr.username.eq(user)).fetchOne();
-        //System.out.println("1 : " +userr1);
-        //List <Userr> listUser = query.select(qUserr).from(qUserr).where(qUserr.username.eq(user)).fetch();  
+
     }
 
     public List<Tuple> getResultByKey(String key) {
@@ -62,8 +54,5 @@ public class QueryDSL {
                 .eq(userName))
                 .fetch();        
         return listItemRecorded;
-
     }
-    
-
 }

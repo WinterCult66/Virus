@@ -9,20 +9,13 @@ import com.emida.methods.FacadePinDistSale;
 import com.emida.selenium.PcterminalDomestic;
 import com.emida.selenium.SeleniumDynamic;
 import com.emida.selenium.mexico.SeleniumPaymentRequest;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.google.gson.Gson;
 import com.virus.xmlutil.XmlFormatter;
 import com.virus.constant.ViewConstant;
-import com.virus.entity.AutomationRecordedDetailEntity;
-import com.virus.entity.AutomationRecordedItemEntity;
-import com.virus.model.AjaxResponseBody;
-import org.springframework.security.core.userdetails.User;
 import com.virus.model.LoginMethodModel;
-import com.virus.pojos.PojoDynamic;
 import com.virus.repository.AutomationRecordedDetailRepository;
 import com.virus.repository.AutomationRecordedItemRepository;
 import com.virus.repository.QueryDSL;
-import com.virus.views.Views;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,18 +24,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -415,55 +404,6 @@ public class MethodsController {
             LOG.error("ERROR : " + IOException);
         }
         return responseImg;
-    }
-
-    @JsonView(Views.Public.class)
-    @RequestMapping(value = "/api/selenium/dynamicform/{nameParam}//{descParam}")
-    public AjaxResponseBody getValues(@RequestBody List<PojoDynamic> formDynamic, @PathVariable String nameParam, @PathVariable String descParam) {
-
-        System.out.println("Name : " + nameParam);
-        System.out.println("Desc : " + descParam);
-
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("TEST :" + formDynamic.toString());
-        String userId = "";
-        LOG.info("FROM CONTROLLER TO INSERT FORM");
-        String uniqueID = UUID.randomUUID().toString();
-        PojoDynamic formDynamics = new PojoDynamic();
-        for (int index = 0; index < formDynamic.size(); index++) {
-            formDynamics = formDynamic.get(index);
-            if (formDynamics != null) {
-                try {
-                    String option = formDynamics.getOptionselect();
-                    System.out.println("OPTION : " + option);
-                    AutomationRecordedDetailEntity automationRecordedDetailEntity = null;
-                    if (formDynamics.getOptionselect().equals("3")) {
-                        automationRecordedDetailEntity = new AutomationRecordedDetailEntity(formDynamics.getOptionselect(),
-                                formDynamics.getValuetosend(), formDynamics.getDivxpath(), uniqueID);
-                    } else {
-                        automationRecordedDetailEntity = new AutomationRecordedDetailEntity(formDynamics.getOptionselect(),
-                                formDynamics.getDivxpath(), formDynamics.getValuetosend(), uniqueID);
-                    }
-
-                    automationRecordedDetailRepository.save(automationRecordedDetailEntity);
-                    LOG.info("INSERT SUCCESS DETAIL");
-                } catch (Exception ex) {
-                    LOG.error("ERROR FAIL INSERT + EXCEPTION {0}" + ex.toString());
-                }
-            }
-        }
-        try {
-            AutomationRecordedItemEntity automationRecordedItemEntity = new AutomationRecordedItemEntity(nameParam, descParam, uniqueID, user.getUsername());
-            automationRecordedItemRepository.save(automationRecordedItemEntity);
-            LOG.info("INSERT SUCCESS ITEM");
-        } catch (Exception ex) {
-            LOG.error("ERROR FAIL INSERT + EXCEPTION {0}" + ex.toString());
-        }
-
-        //queryDSL.findByUser(user.getUsername());
-        //queryDSL.findByKey(uniqueID);
-        queryDSL.getResultByUser(user.getUsername());
-        return null;
     }
 
     public static File convert(MultipartFile file) throws IOException {
