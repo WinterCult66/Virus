@@ -19,5 +19,4 @@ import org.springframework.stereotype.Repository;
 public interface AutomationRecordedDetailRepository extends JpaRepository<AutomationRecordedDetailEntity, Serializable> {
 
     List<AutomationRecordedDetailEntity> findBykeyitemari(String key);
-    //List<AutomationRecordedDetailEntity> findBy
 }

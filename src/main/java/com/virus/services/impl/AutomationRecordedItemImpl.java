@@ -35,15 +35,15 @@ public class AutomationRecordedItemImpl implements AutomationRecordedItemService
                     automationRecordedItemRepository.delete(automationRecordedItemEntity);
                     response = true;
                 } catch (Exception e) {
-                    LOG.info("AutomationRecordedItemImpl.removeContact -  FAILED DROPPING KEY : [{0}], ERROR : {2} " + e + " " + key);
+                    LOG.info("AutomationRecordedItemImpl.removeContact -  Failed Truncate KEY : [{0}], Error : {2} " + e + " " + key);
 
                 }
             }
         } catch (Exception error) {
-            LOG.error("AutomationRecordedItemImpl.removeContact -  FAILED SEARCHING THIS KEY : [{0}], ERROR : {2}  " + error + " " + key);
+            LOG.error("AutomationRecordedItemImpl.removeContact -  Failed Search This Key : [{0}], ERROR : {2}  " + error + " " + key);
 
         } finally {
-            LOG.info("AutomationRecordedItemImpl.removeContact -  FINALIZE TRANSACTION TO DELETE KEY [{0}] " + key);
+            LOG.info("AutomationRecordedItemImpl.removeContact -  Finalize Transaction To Delete Key [{0}] " + key);
             return response;
         }
 

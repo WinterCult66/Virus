@@ -14,6 +14,8 @@ import com.virus.entity.QUserr;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,7 +28,7 @@ public class QueryDSL {
     private QUserr qUserr = QUserr.userr;
     private QAutomationRecordedDetailEntity qAutDetail = QAutomationRecordedDetailEntity.automationRecordedDetailEntity;
     private QAutomationRecordedItemEntity qAutItem = QAutomationRecordedItemEntity.automationRecordedItemEntity;
-    
+    private static final Log LOG = LogFactory.getLog(QueryDSL.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -37,22 +39,34 @@ public class QueryDSL {
 
     public List<Tuple> getResultByKey(String key) {
 
-        JPAQuery<AutomationRecordedDetailEntity> query = new JPAQuery<AutomationRecordedDetailEntity>(em);
-        List<Tuple> listDetailRecorded = query.select(qAutDetail.divxpath, qAutDetail.optionselect, qAutDetail.valuetosend)
-                .from(qAutDetail)
-                .where(qAutDetail.keyitemari
-                .eq(key))
-                .fetch();
+        List<Tuple> listDetailRecorded = null;
+        try {
+            JPAQuery<AutomationRecordedDetailEntity> query = new JPAQuery<AutomationRecordedDetailEntity>(em);
+            listDetailRecorded = query.select(qAutDetail.divxpath, qAutDetail.optionselect, qAutDetail.valuetosend)
+                    .from(qAutDetail)
+                    .where(qAutDetail.keyitemari
+                            .eq(key))
+                    .fetch();
+            LOG.info("Execute Query Select {0} getResultByKey");
+        } catch (Exception ex) {
+            LOG.error("Error Execute Query Select {0} getResultByKey" + ex);
+        }
         return listDetailRecorded;
     }
 
     public List<Tuple> getResultByUser(String userName) {
-        JPAQuery<QAutomationRecordedItemEntity> query = new JPAQuery<QAutomationRecordedItemEntity>(em);
-        List<Tuple> listItemRecorded = query.select(qAutItem.descriptionitem, qAutItem.nameitem, qAutItem.keyari)
-                .from(qAutItem)
-                .where(qAutItem.user
-                .eq(userName))
-                .fetch();        
+        List<Tuple> listItemRecorded = null;
+        try {
+            JPAQuery<QAutomationRecordedItemEntity> query = new JPAQuery<QAutomationRecordedItemEntity>(em);
+            listItemRecorded = query.select(qAutItem.descriptionitem, qAutItem.nameitem, qAutItem.keyari)
+                    .from(qAutItem)
+                    .where(qAutItem.user
+                            .eq(userName))
+                    .fetch();
+            LOG.info("Execute Query Select {0} getResultByUser");
+        } catch (Exception ex) {
+            LOG.error("Error Execute Query Select {0} getResultByUser" + ex);
+        }
         return listItemRecorded;
     }
 }

@@ -88,18 +88,18 @@ public class RecordedTestController {
                                 saveRecordedPojo.getDivxpath(), saveRecordedPojo.getValuetosend(), uniqueID);
                     }
                     automationRecordedDetailRepository.save(automationRecordedDetailEntity);
-                    LOG.info("INSERT SUCCESS DETAIL");
+                    LOG.info("Insert Success Detail {0}");
                 } catch (Exception ex) {
-                    LOG.error("ERROR FAIL INSERT DETAIL + EXCEPTION {0}" + ex.toString());
+                    LOG.error("Error Insert Detail {0} AjaxResponseBody" + ex.toString());
                 }
             }
         }
         try {
             AutomationRecordedItemEntity automationRecordedItemEntity = new AutomationRecordedItemEntity(nameParam, descParam, uniqueID, user.getUsername());
             automationRecordedItemRepository.save(automationRecordedItemEntity);
-            LOG.info("INSERT SUCCESS ITEM");
+            LOG.info("Insert Success Item");
         } catch (Exception ex) {
-            LOG.error("ERROR FAIL INSERT ITEM + EXCEPTION {0}" + ex.toString());
+            LOG.error("Error Insert Item {0} AjaxResponseBody" + ex.toString());
         }
         return null;
     }
@@ -114,7 +114,7 @@ public class RecordedTestController {
             String json = new Gson().toJson(query);
             mav.addObject("jsonList", json);
         } catch (Exception ex) {
-            LOG.error("ERROR IN SHOWRECORDED " + ex);
+            LOG.error("Error showRecords " + ex);
         }
         return mav;
     }
@@ -130,9 +130,8 @@ public class RecordedTestController {
             List<String> a = listFolder(fromMethodFolder);
             responseImg.put("gs", a.toString());
             System.out.println(a.toString());
-
         } catch (Exception ex) {
-            LOG.error("ERROR IN PROCCESS RECORDS " + ex);
+            LOG.error("Error Proccess Records {0}  processRecords " + ex);
         }
 
         return responseImg;
@@ -140,16 +139,15 @@ public class RecordedTestController {
 
     @RequestMapping("/deleterecords/{key}")
     public boolean deleteRecords(@PathVariable String key) {
-        LOG.info("Enter to Method to Delete Records");
-        //Map<String, Object> responseDelete = new LinkedHashMap();
+        LOG.info("Enter to Method to Delete Records");        
         boolean responseDelete = false;
         try {
             responseDelete = automationRecordedItemService.removeItem(key);
-            LOG.info("DELETE SUCCESS ITEM ");            
-            automationRecorderDetailService.listAlldetails(key);
-            LOG.info("DELETE SUCCESS DETAILS ");
+            LOG.info("Complete Delete Item {0}");            
+            automationRecorderDetailService.listdeleteAlldetails(key);
+            LOG.info("Complete Delete Detail {1}" );
         } catch (Exception ex) {
-            LOG.error("ERROR IN DELETE deleteRecords" + ex);            
+            LOG.error("Error Delete, DeleteRecords " + ex);            
         }       
         return responseDelete;
     }

@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface AutomationRecorderDetailService {
         
-    public abstract List<AutomationRecordedDetailEntity> listAlldetails(String key);
+    public abstract List<AutomationRecordedDetailEntity> listdeleteAlldetails(String key);
 }
