@@ -7,6 +7,7 @@ package com.virus.repository;
 
 import com.virus.entity.AutomationRecordedDetailEntity;
 import java.io.Serializable;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AutomationRecordedDetailRepository extends JpaRepository<AutomationRecordedDetailEntity, Serializable> {
 
+    List<AutomationRecordedDetailEntity> findBykeyitemari(String key);
+    //List<AutomationRecordedDetailEntity> findBy
 }

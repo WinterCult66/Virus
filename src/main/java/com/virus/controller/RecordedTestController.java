@@ -20,6 +20,7 @@ import static com.virus.util.Util.listFolder;
 import static com.virus.util.Util.folderNumberAleatory;
 import com.virus.repository.QueryDSL;
 import com.virus.services.AutomationRecordedItemService;
+import com.virus.services.AutomationRecorderDetailService;
 import com.virus.views.Views;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,9 +52,12 @@ public class RecordedTestController {
 
     @Autowired
     private AutomationRecordedItemRepository automationRecordedItemRepository;
-    
+
     @Autowired
     private AutomationRecordedItemService automationRecordedItemService;
+
+    @Autowired
+    private AutomationRecorderDetailService automationRecorderDetailService;
 
     @Autowired
     private QueryDSL queryDSL;
@@ -137,15 +141,21 @@ public class RecordedTestController {
     @RequestMapping("/deleterecords/{key}")
     public Map deleteRecords(@PathVariable String key) {
         LOG.info("Enter to Method to Delete Records");
-        Map<String, Object> responseImg = new LinkedHashMap();
+        Map<String, Object> responseDelete = new LinkedHashMap();
         try {
-            automationRecordedItemService.removeContact(key);           
-            
+            automationRecordedItemService.removeContact(key);
+            LOG.error("DELETE SUCCESS ITEM ");
         } catch (Exception ex) {
-            LOG.error("ERROR IN PROCCESS RECORDS " + ex);
+            LOG.error("ERROR IN DELETE ITEM " + ex);
         }
-
-        return responseImg;
+        try {
+            automationRecorderDetailService.listAlldetails(key);
+            LOG.error("DELETE SUCCESS DETAILS ");
+        } catch (Exception ex) {
+            LOG.error("ERROR IN DELETE DETAILS " + ex);
+        }
+        responseDelete.put("delete", "Delete Succces item and Details");
+        return responseDelete;
     }
 
 }

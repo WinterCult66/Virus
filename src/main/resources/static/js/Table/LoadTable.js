@@ -66,6 +66,14 @@ $(document).ready(function () {
                 timeout: 10000
             }).success(function () {
                 console.log("DELTE SUCCES");
+            }).done(function (msg) {
+                $('.ajax-loading').hide(10);
+                toastr.success(msg.delete);
+                toastr.options = {
+                    "closeButton": true
+                };
+                
+               
             }).error(function (error) {
                 console.log("ERROR : " + error);
             });

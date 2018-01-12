@@ -5,14 +5,15 @@
  */
 package com.virus.services;
 
-import com.virus.model.AutomationRecorderModel;
+
+import com.virus.entity.AutomationRecordedDetailEntity;
 import java.util.List;
 
 /**
  *
  * @author krodriguez
  */
-public interface AutomationRecorderService {
-    
-    public abstract List<AutomationRecorderModel> listAllRecorders();
+public interface AutomationRecorderDetailService {
+        
+    public abstract List<AutomationRecordedDetailEntity> listAlldetails(String key);
 }
