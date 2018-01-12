@@ -7,17 +7,12 @@
 $(document).ready(function () {
     var list = [];
     list = $("#list").val();
-    //console.log(list);
     var json = JSON.parse(list);
-    console.log(json);
     $.each(json, function (i) {
         var getColor = arrayColors(numberRandom());
-        var dataCard = "<div  class='col-xl-3 col-lg-6 col-xs-12'><div class='card " + getColor + "'><div class='card-body' ><div class='card-block'><div class='media'><div class='media-left media-middle'><div clas= 'col-md-2 clickPlay'><a><i id =" + json[i].a[2] + " class='icon-play3 white font-large-1 float-xs-left'></i></a></div><div class ='col-md-2'><a><i id =d" + json[i].a[2] + " class=' icon-bin white font-large-1 float-xs-left'></i></a></div></div><div class='media-body white text-xs-right'><h3>" + json[i].a[1] + "</h3><span>" + json[i].a[0] + "</span></div></div></div></div></div></div> ";
+        var dataCard = "<div  id= c" + json[i].a[2] + " class='col-xl-3 col-lg-6 col-xs-12'><div class='card " + getColor + "'><div class='card-body' ><div class='card-block'><div class='media'><div class='media-left media-middle'><div clas= 'col-md-2 clickPlay'><a><i id =" + json[i].a[2] + " class='icon-play3 white font-large-1 float-xs-left'></i></a></div><div class ='col-md-2'><a><i id =d" + json[i].a[2] + " class=' icon-bin white font-large-1 float-xs-left'></i></a></div></div><div class='media-body white text-xs-right'><h3>" + json[i].a[1] + "</h3><span>" + json[i].a[0] + "</span></div></div></div></div></div></div> ";
         $("#cardDynamic").append(dataCard);
     });
-    
-    
-
     function arrayColors(position) {
         var colors = ["bg-success",
             "bg-black",
@@ -71,17 +66,14 @@ $(document).ready(function () {
             }).success(function () {
                 console.log("DELTE SUCCES");
             }).done(function (msg) {
-                $('.ajax-loading').hide(10);
                 if (msg === true) {
                     toastr.success("Delete Success");
                     toastr.options = {
                         "closeButton": true
                     };
-                    var result = json.push(0,0);
-                    console.log(json);
-                    console.log(result);
+                    $("#c" + idSub).remove();
                 }
-
+                $('.ajax-loading').hide(10);
             }).error(function (error) {
                 console.log("ERROR : " + error);
             });
@@ -101,6 +93,8 @@ $(document).ready(function () {
             delete obj[c];
         }
     }
+
+
 
 
 
