@@ -139,22 +139,18 @@ public class RecordedTestController {
     }
 
     @RequestMapping("/deleterecords/{key}")
-    public Map deleteRecords(@PathVariable String key) {
+    public boolean deleteRecords(@PathVariable String key) {
         LOG.info("Enter to Method to Delete Records");
-        Map<String, Object> responseDelete = new LinkedHashMap();
+        //Map<String, Object> responseDelete = new LinkedHashMap();
+        boolean responseDelete = false;
         try {
-            automationRecordedItemService.removeContact(key);
-            LOG.error("DELETE SUCCESS ITEM ");
-        } catch (Exception ex) {
-            LOG.error("ERROR IN DELETE ITEM " + ex);
-        }
-        try {
+            responseDelete = automationRecordedItemService.removeItem(key);
+            LOG.info("DELETE SUCCESS ITEM ");            
             automationRecorderDetailService.listAlldetails(key);
-            LOG.error("DELETE SUCCESS DETAILS ");
+            LOG.info("DELETE SUCCESS DETAILS ");
         } catch (Exception ex) {
-            LOG.error("ERROR IN DELETE DETAILS " + ex);
-        }
-        responseDelete.put("delete", "Delete Succces item and Details");
+            LOG.error("ERROR IN DELETE deleteRecords" + ex);            
+        }       
         return responseDelete;
     }
 
