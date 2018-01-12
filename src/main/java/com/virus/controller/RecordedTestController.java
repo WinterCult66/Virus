@@ -131,19 +131,16 @@ public class RecordedTestController {
             for (Object str : listOptions) {
                 String option = String.valueOf(str);
                 //str.toString();
-                if (option.equals("5")) {
-                    System.out.println("TRUEEEEEEEEEEEEEEE");
+                if (option.equals("5")) {                    
                     enableImage = true;
                 }
             }
             List<String> a = listFolder(fromMethodFolder);
             responseImg.put("gs", a.toString());
-            responseImg.put("image", enableImage);
-            System.out.println(a.toString());
+            responseImg.put("image", enableImage);            
         } catch (Exception ex) {
             LOG.error("Error Proccess Records {0}  processRecords " + ex);
         }
-
         return responseImg;
     }
 
