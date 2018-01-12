@@ -17,4 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AutomationRecordedItemRepository extends JpaRepository<AutomationRecordedItemEntity, Serializable> {
 
+    AutomationRecordedItemEntity findBykeyari(String key);
+
 }

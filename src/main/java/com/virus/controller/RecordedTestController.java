@@ -19,6 +19,7 @@ import com.virus.repository.AutomationRecordedItemRepository;
 import static com.virus.util.Util.listFolder;
 import static com.virus.util.Util.folderNumberAleatory;
 import com.virus.repository.QueryDSL;
+import com.virus.services.AutomationRecordedItemService;
 import com.virus.views.Views;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -50,6 +51,9 @@ public class RecordedTestController {
 
     @Autowired
     private AutomationRecordedItemRepository automationRecordedItemRepository;
+    
+    @Autowired
+    private AutomationRecordedItemService automationRecordedItemService;
 
     @Autowired
     private QueryDSL queryDSL;
@@ -130,11 +134,12 @@ public class RecordedTestController {
         return responseImg;
     }
 
-    @RequestMapping("/deleterecords/{id}")
-    public Map deleteRecords(@PathVariable String id) {
+    @RequestMapping("/deleterecords/{key}")
+    public Map deleteRecords(@PathVariable String key) {
         LOG.info("Enter to Method to Delete Records");
         Map<String, Object> responseImg = new LinkedHashMap();
         try {
+            automationRecordedItemService.removeContact(key);           
             
         } catch (Exception ex) {
             LOG.error("ERROR IN PROCCESS RECORDS " + ex);

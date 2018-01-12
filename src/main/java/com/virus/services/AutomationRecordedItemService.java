@@ -11,4 +11,6 @@ package com.virus.services;
  */
 public interface AutomationRecordedItemService {
     
+    public abstract void removeContact(String key);
+    
 }

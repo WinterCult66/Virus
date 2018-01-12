@@ -13,9 +13,6 @@ import com.google.gson.Gson;
 import com.virus.xmlutil.XmlFormatter;
 import com.virus.constant.ViewConstant;
 import com.virus.model.LoginMethodModel;
-import com.virus.repository.AutomationRecordedDetailRepository;
-import com.virus.repository.AutomationRecordedItemRepository;
-import com.virus.repository.QueryDSL;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,7 +23,6 @@ import java.util.Map;
 import java.util.Random;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,15 +39,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/methods")
 public class MethodsController {
-
-    @Autowired
-    private AutomationRecordedDetailRepository automationRecordedDetailRepository;
-
-    @Autowired
-    private AutomationRecordedItemRepository automationRecordedItemRepository;
-
-    @Autowired
-    private QueryDSL queryDSL;
 
     private static final Log LOG = LogFactory.getLog(MethodsController.class);
     XmlFormatter formatter = new XmlFormatter();
