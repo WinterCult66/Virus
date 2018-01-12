@@ -45,7 +45,7 @@ public class Util {
                 String[] parts = ficheros[i].getAbsolutePath().split("\\\\");
                 int partsInt = parts.length;
                 imagesList.add(ViewConstant.IMAGE_URL + parts[partsInt - 2] + "\\" + parts[partsInt - 1]);
-                System.out.println("IMGS: >>>>>" + ViewConstant.IMAGE_URL + parts[partsInt - 2] + "\\" + parts[partsInt - 1]);
+                LOG.info("Send Paths Images: >>>>> " + ViewConstant.IMAGE_URL + parts[partsInt - 2] + "\\" + parts[partsInt - 1]);
             }
         } else {
             LOG.info(ViewConstant.ERROR_FOLDER);

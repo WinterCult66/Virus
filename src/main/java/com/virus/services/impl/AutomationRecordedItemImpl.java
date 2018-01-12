@@ -36,7 +36,6 @@ public class AutomationRecordedItemImpl implements AutomationRecordedItemService
                     response = true;
                 } catch (Exception e) {
                     LOG.info("AutomationRecordedItemImpl.removeContact -  Failed Truncate KEY : [{0}], Error : {2} " + e + " " + key);
-
                 }
             }
         } catch (Exception error) {

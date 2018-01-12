@@ -37,21 +37,27 @@ $(document).ready(function () {
                 url: "/records/processrecords/" + id,
                 timeout: 100000
             }).success(function () {
-                console.log("SUCCESS");
-            }).done(function (msg) {
                 $("#question").html("");
                 $("#automationImages").html("");
                 $("#ol").html("").empty();
-                graphicsImages.DrawGraphic(msg);
-                $('#modal-2').modal('show');
+            }).done(function (msg) {                                
+                if (msg.image == true) {
+                    graphicsImages.DrawGraphic(msg);
+                    $('#modal-2').modal('show');
+                } else {
+                    toastr.success("Test Complete Success");
+                    toastr.options = {
+                        "closeButton": true
+                    };                    
+                }
                 msg.gs = null;
+                msg.image = null;
                 $('.ajax-loading').hide(1);
             }).error(function (error) {
                 console.log(error);
             });
         }
     });
-
 
     $(".icon-bin").on("click", function () {
         var id = ($(this).prop("id"));
@@ -77,29 +83,6 @@ $(document).ready(function () {
             }).error(function (error) {
                 console.log("ERROR : " + error);
             });
-
         }
     });
-
-    function removeItem(obj, prop, val) {
-        var c, found = false;
-        for (c in obj) {
-            if (obj[c][prop] == val) {
-                found = true;
-                break;
-            }
-        }
-        if (found) {
-            delete obj[c];
-        }
-    }
-
-
-
-
-
-
-
 });
-
-

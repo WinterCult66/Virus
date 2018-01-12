@@ -126,9 +126,19 @@ public class RecordedTestController {
         try {
             String fromMethodFolder = (folderNumberAleatory());
             List<Tuple> query = queryDSL.getResultByKey(id);
-            seleniumRecordedTest.ReadRecordeds(query, fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+            List listOptions = seleniumRecordedTest.ReadRecordeds(query, fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+            boolean enableImage = false;
+            for (Object str : listOptions) {
+                String option = String.valueOf(str);
+                //str.toString();
+                if (option.equals("5")) {
+                    System.out.println("TRUEEEEEEEEEEEEEEE");
+                    enableImage = true;
+                }
+            }
             List<String> a = listFolder(fromMethodFolder);
             responseImg.put("gs", a.toString());
+            responseImg.put("image", enableImage);
             System.out.println(a.toString());
         } catch (Exception ex) {
             LOG.error("Error Proccess Records {0}  processRecords " + ex);
@@ -139,16 +149,16 @@ public class RecordedTestController {
 
     @RequestMapping("/deleterecords/{key}")
     public boolean deleteRecords(@PathVariable String key) {
-        LOG.info("Enter to Method to Delete Records");        
+        LOG.info("Enter to Method to Delete Records");
         boolean responseDelete = false;
         try {
             responseDelete = automationRecordedItemService.removeItem(key);
-            LOG.info("Complete Delete Item {0}");            
+            LOG.info("Complete Delete Item {0}");
             automationRecorderDetailService.listdeleteAlldetails(key);
-            LOG.info("Complete Delete Detail {1}" );
+            LOG.info("Complete Delete Detail {1}");
         } catch (Exception ex) {
-            LOG.error("Error Delete, DeleteRecords " + ex);            
-        }       
+            LOG.error("Error Delete, DeleteRecords " + ex);
+        }
         return responseDelete;
     }
 
