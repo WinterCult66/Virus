@@ -103,7 +103,7 @@ $(document).ready(function () {
         toastr.options = {
             "closeButton": true
         };
-        console.log(JSON.stringify(dataJson));
+        //console.log(JSON.stringify(dataJson));
     });
     $("#upload").on("click", function () {
 

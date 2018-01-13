@@ -8,10 +8,8 @@ public class ViewConstant {
     //////CONSTANTS
     public static final String CONTACT_FORM = "contactform" ;
     public static final String CONTACTS = "contacts" ;
-    public static final String LOGIN = "login" ;
-    public static final String NOTES = "notes";
-    public static final String HOME = "home";
-    public static final String NOTES_FORM = "notesform";
+    public static final String LOGIN = "login" ;    
+    public static final String HOME = "home";    
     public static final String PRODUCTS = "products";
     public static final String METHODS = "methods";
     public static final String SELENIUM = "methodsemida";
