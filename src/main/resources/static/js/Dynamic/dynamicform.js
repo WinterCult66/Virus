@@ -135,8 +135,7 @@ $(document).ready(function () {
                     "closeButton": true,
                     "hideAfter": 10000
                 };
-            }).done(function () {
-                //window.location = '/';
+            }).done(function () {                
             }).error(function (thrownError) {
                 console.log("ERROR From Dynamic Form: " + thrownError);
                 toastr.error('Error Send Data');
@@ -210,10 +209,6 @@ $(document).ready(function () {
         productList ["optionselect"] = select;
         productList["divxpath"] = field1;
         productList ["valuetosend"] = field2;
-//        productList ["option"] = select;
-//        productList ["div"] = field1;
-//        productList ["value"] = field2;
-        //console.log(productList);
         jsonObj.push(productList);
         //jsonString = JSON.stringify(jsonObj); 
         return jsonObj;

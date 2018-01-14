@@ -128,10 +128,9 @@ public class RecordedTestController {
             List<Tuple> query = queryDSL.getResultByKey(id);
             List listOptions = seleniumRecordedTest.ReadRecordeds(query, fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
             boolean enableImage = false;
-            for (Object str : listOptions) {
-                String option = String.valueOf(str);
-                //str.toString();
-                if (option.equals("5")) {                    
+            for (Object str : listOptions) {                
+                Object option = "5";                
+                if (str.equals(option)) {                       
                     enableImage = true;
                 }
             }
@@ -143,7 +142,7 @@ public class RecordedTestController {
         }
         return responseImg;
     }
-
+    
     @RequestMapping("/deleterecords/{key}")
     public boolean deleteRecords(@PathVariable String key) {
         LOG.info("Enter to Method to Delete Records");
