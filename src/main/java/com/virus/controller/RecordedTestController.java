@@ -6,6 +6,8 @@
 package com.virus.controller;
 
 import com.emida.selenium.SeleniumRecordedTest;
+import com.emida.selenium.multibrowser.MultiSeleniumRecordedTest;
+import com.emida.util.Util;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.google.gson.Gson;
 import com.querydsl.core.Tuple;
@@ -22,10 +24,13 @@ import com.virus.repository.QueryDSL;
 import com.virus.services.AutomationRecordedItemService;
 import com.virus.services.AutomationRecorderDetailService;
 import com.virus.views.Views;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,23 +131,42 @@ public class RecordedTestController {
         try {
             String fromMethodFolder = (folderNumberAleatory());
             List<Tuple> query = queryDSL.getResultByKey(id);
-            List listOptions = seleniumRecordedTest.ReadRecordeds(query, fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+            //List listOptions = seleniumRecordedTest.ReadRecordeds(query, fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+            List listOptions = new ArrayList();
+            MultiSeleniumRecordedTest worker = null;
+            try {
+                String driverName = null;
+                ExecutorService executor = Executors.newFixedThreadPool(2);
+                for (int i = 0; i < 2; i++) {
+                    driverName = Util.getNameDriver(i);
+                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4444/wd/hub", query, fromMethodFolder, listOptions);//WorkerThread(driverName);                    
+                    executor.execute(worker);
+                }
+                executor.shutdown();
+                while (!executor.isTerminated()) {
+                }
+            } catch (Exception ex) {
+                LOG.error("Error Proccess Thread {0}  processRecords " + ex);
+            }
+            listOptions = worker.getListOptions();
+            System.out.println("LISTADO : " + listOptions);
+            //List listOptions = 
             boolean enableImage = false;
-            for (Object str : listOptions) {                
-                Object option = "5";                
-                if (str.equals(option)) {                       
+            for (Object str : listOptions) {
+                Object option = "5";
+                if (str.equals(option)) {
                     enableImage = true;
                 }
             }
             List<String> a = listFolder(fromMethodFolder);
             responseImg.put("gs", a.toString());
-            responseImg.put("image", enableImage);            
+            responseImg.put("image", enableImage);
         } catch (Exception ex) {
             LOG.error("Error Proccess Records {0}  processRecords " + ex);
         }
         return responseImg;
     }
-    
+
     @RequestMapping("/deleterecords/{key}")
     public boolean deleteRecords(@PathVariable String key) {
         LOG.info("Enter to Method to Delete Records");
