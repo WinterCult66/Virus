@@ -33,6 +33,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -133,31 +135,34 @@ public class RecordedTestController {
             List<Tuple> query = queryDSL.getResultByKey(id);
             List<Object> objectList = new ArrayList<Object>();
             MultiSeleniumRecordedTest worker = null;
+            String driverName = null;
+            JSONArray jsonInfo2Array = new JSONArray();
             try {
-                String driverName = null;
                 ExecutorService executor = Executors.newFixedThreadPool(2);
                 for (int i = 0; i < 2; i++) {
                     driverName = Util.getNameDriver(i);
-                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList);//WorkerThread(driverName);                    
+                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList, jsonInfo2Array);
                     executor.execute(worker);
                 }
                 executor.shutdown();
-                while (!executor.isTerminated()) {                
-                   
+                while (!executor.isTerminated()) {
+
                 }
-                
+
             } catch (Exception ex) {
                 LOG.error("Error Proccess Thread {0}  processRecords " + ex);
             }
-             objectList = worker.getObjectList();
+            objectList = worker.getObjectList();
             System.out.println("LISTADO : " + objectList);
+            jsonInfo2Array = worker.getJsonObjectInfo2Array();
+            System.out.println(jsonInfo2Array);   
             boolean enableImage = false;
             for (Object str : objectList) {
                 Object option = "5";
                 if (str.equals(option)) {
                     enableImage = true;
                 }
-           }
+            }
             List<String> a = listFolder(fromMethodFolder);
             responseImg.put("gs", a.toString());
             responseImg.put("image", enableImage);
