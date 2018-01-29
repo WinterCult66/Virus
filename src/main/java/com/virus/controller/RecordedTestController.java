@@ -131,33 +131,33 @@ public class RecordedTestController {
         try {
             String fromMethodFolder = (folderNumberAleatory());
             List<Tuple> query = queryDSL.getResultByKey(id);
-            //List listOptions = seleniumRecordedTest.ReadRecordeds(query, fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
-            List listOptions = new ArrayList();
+            List<Object> objectList = new ArrayList<Object>();
             MultiSeleniumRecordedTest worker = null;
             try {
                 String driverName = null;
                 ExecutorService executor = Executors.newFixedThreadPool(2);
                 for (int i = 0; i < 2; i++) {
                     driverName = Util.getNameDriver(i);
-                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4444/wd/hub", query, fromMethodFolder, listOptions);//WorkerThread(driverName);                    
+                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList);//WorkerThread(driverName);                    
                     executor.execute(worker);
                 }
                 executor.shutdown();
-                while (!executor.isTerminated()) {
+                while (!executor.isTerminated()) {                
+                   
                 }
+                
             } catch (Exception ex) {
                 LOG.error("Error Proccess Thread {0}  processRecords " + ex);
             }
-            listOptions = worker.getListOptions();
-            System.out.println("LISTADO : " + listOptions);
-            //List listOptions = 
+             objectList = worker.getObjectList();
+            System.out.println("LISTADO : " + objectList);
             boolean enableImage = false;
-            for (Object str : listOptions) {
+            for (Object str : objectList) {
                 Object option = "5";
                 if (str.equals(option)) {
                     enableImage = true;
                 }
-            }
+           }
             List<String> a = listFolder(fromMethodFolder);
             responseImg.put("gs", a.toString());
             responseImg.put("image", enableImage);
