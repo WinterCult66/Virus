@@ -10,11 +10,13 @@ import com.emida.selenium.multibrowser.MultiSeleniumRecordedTest;
 import com.emida.util.Util;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.querydsl.core.Tuple;
 import com.virus.constant.ViewConstant;
 import com.virus.entity.AutomationRecordedDetailEntity;
 import com.virus.entity.AutomationRecordedItemEntity;
 import com.virus.model.AjaxResponseBody;
+import com.virus.model.TokenModel;
 import com.virus.pojos.RecordedPojo;
 import com.virus.repository.AutomationRecordedDetailRepository;
 import com.virus.repository.AutomationRecordedItemRepository;
@@ -34,7 +36,6 @@ import java.util.concurrent.Executors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -69,7 +70,7 @@ public class RecordedTestController {
     @Autowired
     private QueryDSL queryDSL;
 
-    private static final Log LOG = LogFactory.getLog(ContactController.class);
+    private static final Log LOG = LogFactory.getLog(RecordedTestController.class);
 
     public SeleniumRecordedTest seleniumRecordedTest = new SeleniumRecordedTest();
 
@@ -155,7 +156,17 @@ public class RecordedTestController {
             objectList = worker.getObjectList();
             System.out.println("LISTADO : " + objectList);
             jsonInfo2Array = worker.getJsonObjectInfo2Array();
-            System.out.println(jsonInfo2Array);   
+            String s = jsonInfo2Array.toString();
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<List<TokenModel>>() {
+            }.getType();
+            List<TokenModel> tokenList = gson.fromJson(s, type);
+
+            for (TokenModel tokenModel : tokenList) {
+                System.out.println("Token Model : " + tokenModel.startime + "-" + tokenModel.driver + "-" + "-" + tokenModel.endtime);
+            }
+            System.out.println(jsonInfo2Array.get(1));
+            System.out.println((jsonInfo2Array));
             boolean enableImage = false;
             for (Object str : objectList) {
                 Object option = "5";
