@@ -15,11 +15,13 @@ import com.querydsl.core.Tuple;
 import com.virus.constant.ViewConstant;
 import com.virus.entity.AutomationRecordedDetailEntity;
 import com.virus.entity.AutomationRecordedItemEntity;
+import com.virus.entity.HistoryItemEntity;
 import com.virus.model.AjaxResponseBody;
 import com.virus.model.TokenModel;
 import com.virus.pojos.RecordedPojo;
 import com.virus.repository.AutomationRecordedDetailRepository;
 import com.virus.repository.AutomationRecordedItemRepository;
+import com.virus.repository.HistoryItemRepository;
 import static com.virus.util.Util.listFolder;
 import static com.virus.util.Util.folderNumberAleatory;
 import com.virus.repository.QueryDSL;
@@ -66,6 +68,9 @@ public class RecordedTestController {
 
     @Autowired
     private AutomationRecorderDetailService automationRecorderDetailService;
+    
+    @Autowired
+    private HistoryItemRepository historyItemRepository;
 
     @Autowired
     private QueryDSL queryDSL;
@@ -131,6 +136,8 @@ public class RecordedTestController {
     public Map processRecords(@PathVariable String id) {
         LOG.info("Enter to Method to Proccess Test Recorded");
         Map<String, Object> responseImg = new LinkedHashMap();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean enableImage = false;
         try {
             String fromMethodFolder = (folderNumberAleatory());
             List<Tuple> query = queryDSL.getResultByKey(id);
@@ -153,26 +160,36 @@ public class RecordedTestController {
             } catch (Exception ex) {
                 LOG.error("Error Proccess Thread {0}  processRecords " + ex);
             }
-            objectList = worker.getObjectList();
-            System.out.println("LISTADO : " + objectList);
-            jsonInfo2Array = worker.getJsonObjectInfo2Array();
-            String s = jsonInfo2Array.toString();
-            Gson gson = new Gson();
-            java.lang.reflect.Type type = new TypeToken<List<TokenModel>>() {
-            }.getType();
-            List<TokenModel> tokenList = gson.fromJson(s, type);
+            try {
+                objectList = worker.getObjectList();
+                jsonInfo2Array = worker.getJsonObjectInfo2Array();
+                String uniqueIDGroup = worker.getUniqueIDGroup();
+                String stringJsonInfo = jsonInfo2Array.toString();
+                Gson gson = new Gson();
+                java.lang.reflect.Type type = new TypeToken<List<TokenModel>>() {
+                }.getType();
+                List<TokenModel> tokenList = gson.fromJson(stringJsonInfo, type);
 
-            for (TokenModel tokenModel : tokenList) {
-                System.out.println("Token Model : " + tokenModel.startime + "-" + tokenModel.driver + "-" + "-" + tokenModel.endtime);
-            }
-            System.out.println(jsonInfo2Array.get(1));
-            System.out.println((jsonInfo2Array));
-            boolean enableImage = false;
-            for (Object str : objectList) {
-                Object option = "5";
-                if (str.equals(option)) {
-                    enableImage = true;
+                for (TokenModel tokenModel : tokenList) {
+                    try{
+                    tokenModel.setUniqueidgroup(uniqueIDGroup);
+                    HistoryItemEntity historyItemEntity = null;
+                    historyItemEntity = new HistoryItemEntity(user.getUsername(), tokenModel.getUniqueid(), tokenModel.getUniqueidgroup(), tokenModel.getStartime(), tokenModel.getDriver(), tokenModel.endtime);
+                    historyItemRepository.save(historyItemEntity);
+                    LOG.info("Insert Success Histori Item {}");
+                    }catch(Exception ex){
+                        LOG.error(ex);
+                    }
                 }
+
+                for (Object str : objectList) {
+                    Object option = "5";
+                    if (str.equals(option)) {
+                        enableImage = true;
+                    }
+                }
+            } catch (Exception ex) {
+                LOG.error(ex);
             }
             List<String> a = listFolder(fromMethodFolder);
             responseImg.put("gs", a.toString());

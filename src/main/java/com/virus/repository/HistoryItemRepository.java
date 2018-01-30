@@ -5,18 +5,17 @@
  */
 package com.virus.repository;
 
-import com.virus.entity.HistoryDetailEntity;
+import com.virus.entity.HistoryItemEntity;
 import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author krodriguez
+ * @author Permafrost
  */
 @Repository
-public interface HistoryDetailRepository extends JpaRepository<HistoryDetailEntity, Serializable>{
-    
+public interface HistoryItemRepository extends JpaRepository<HistoryItemEntity, Serializable>{
     
     
 }

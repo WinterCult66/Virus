@@ -11,8 +11,10 @@ package com.virus.model;
  */
 public class TokenModel {
 
+    public String uniqueid;
+    public String uniqueidgroup;
     public String startime;
-    public  String driver;
+    public String driver;
     public String endtime;
 
     public String getStartime() {
@@ -38,5 +40,23 @@ public class TokenModel {
     public void setEndtime(String endtime) {
         this.endtime = endtime;
     }
+
+    public String getUniqueid() {
+        return uniqueid;
+    }
+
+    public void setUniqueid(String uniqueid) {
+        this.uniqueid = uniqueid;
+    }
+
+    public String getUniqueidgroup() {
+        return uniqueidgroup;
+    }
+
+    public void setUniqueidgroup(String uniqueidgroup) {
+        this.uniqueidgroup = uniqueidgroup;
+    }
+    
+    
 
 }
