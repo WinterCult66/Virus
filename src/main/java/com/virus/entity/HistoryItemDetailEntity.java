@@ -40,6 +40,16 @@ public class HistoryItemDetailEntity {
         this.event = event;
     }
 
+    public String getUniqueid() {
+        return uniqueid;
+    }
+
+    public void setUniqueid(String uniqueid) {
+        this.uniqueid = uniqueid;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "HistoryItemDetailEntity{" + "id=" + id + ", event=" + event + '}';

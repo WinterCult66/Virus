@@ -97,7 +97,7 @@ public class HistoryItemEntity {
 
     @Override
     public String toString() {
-        return "HistoryItemEntity{" + "id=" + id + ", user=" + user + ", uniqueid=" + uniqueid + ", uniqueidgroup=" + uniqueidgroup + ", startime=" + startime + ", driver=" + driver + ", endtime=" + endtime + '}';
+        return "{" + "id=" + id + ", user=" + user + ", uniqueid=" + uniqueid + ", uniqueidgroup=" + uniqueidgroup + ", startime=" + startime + ", driver=" + driver + ", endtime=" + endtime + '}';
     }
 
 }

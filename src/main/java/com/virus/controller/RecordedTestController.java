@@ -33,12 +33,14 @@ import com.virus.services.AutomationRecordedItemService;
 import com.virus.services.AutomationRecorderDetailService;
 import com.virus.views.Views;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
@@ -154,6 +156,7 @@ public class RecordedTestController {
             String driverName = null;
             JSONArray jsonInfo2Array = new JSONArray();
             JSONArray stepByStep = new JSONArray();
+            System.out.println(query);
             try {
                 ExecutorService executor = Executors.newFixedThreadPool(2);
                 for (int i = 0; i < 2; i++) {
@@ -186,32 +189,32 @@ public class RecordedTestController {
                     try {
                         tokenModel.setUniqueidgroup(uniqueIDGroup);
                         HistoryItemEntity historyItemEntity = null;
+                        HistoryItemDetailEntity historyItemDetailEntity = null;
                         historyItemEntity = new HistoryItemEntity(user.getUsername(), tokenModel.getUniqueid(), tokenModel.getUniqueidgroup(), tokenModel.getStartime(), tokenModel.getDriver(), tokenModel.endtime);
                         historyItemRepository.save(historyItemEntity);
-                        LOG.info("Insert Success Histori Item {}");
-//                        try {
-//                            System.out.println(stepByStep);
-//                            String stringListStepByStep = stepByStep.toString();
-//                            System.out.println(stringListStepByStep);
-//                            java.lang.reflect.Type typeHistoryDetail = new TypeToken<List<HistoryDetailPojo>>() {
-//                            }.getType();
-//                            System.out.println("TESTTTTTTT");
-//                            List<HistoryDetailPojo> historyList = gson.fromJson(stringListStepByStep, typeHistoryDetail);
-////                            List<HistoryDetailPojo> historyList = gson.fromJson(stringListStepByStep, typeHistoryDetail);
-//                            System.out.println("tamaño:" + historyList.size());
-//                            for (int index = 0; index < historyList.size(); index++) {
-//                                System.out.println("TEST" + index);
-//                            }
-//
-//                        } catch (Exception e) {
-//                            LOG.error("Insert Fail historyItemEntity Detail" + e);
-//                        }
-
+                        LOG.info("Insert in Table HistoryItem: " + historyItemEntity.toString());
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        for (Tuple item : query) {
+                            Object oXpath = item.toArray()[0];
+                            Object oOption = item.toArray()[1];
+                            Object oValue = item.toArray()[2];
+                            String xpath = String.valueOf(oXpath);
+                            String option = String.valueOf(oOption);
+                            String value = String.valueOf(oValue);
+                            map = addInfofromTuple(option, value, xpath, tokenModel.getUniqueid());
+                            String eventFromMap = map.get(tokenModel.getUniqueid());
+                            String idUUID = tokenModel.getUniqueid();
+                            historyItemDetailEntity = new HistoryItemDetailEntity(eventFromMap, idUUID);
+                            historyItemDetailRepository.save(historyItemDetailEntity);
+                            LOG.info("Insert in Table HistoryItemDetail - To ID: " + idUUID + " : with Event: " + eventFromMap);
+                        }
                     } catch (Exception ex) {
                         LOG.error("Insert Fail historyItemEntity" + ex);
                     }
                 }
 
+                LOG.info("Insert Success Histori's Item");
+                LOG.info("Insert Success Histori Details Item");
                 for (Object str : objectList) {
                     Object option = "5";
                     if (str.equals(option)) {
@@ -243,6 +246,41 @@ public class RecordedTestController {
             LOG.error("Error Delete, DeleteRecords " + ex);
         }
         return responseDelete;
+    }
+
+    private HashMap<String, String> addInfofromTuple(String event, String target, String param, String uniqueID) {
+        HashMap<String, String> map = new HashMap<String, String>();
+        String events;
+        try {
+            switch (event) {
+                case "1":
+                    events = "Send URL: " + target;
+                    map.put(uniqueID, events);
+                    break;
+                case "2":
+                    events = "Send Value: " + target;
+                    map.put(uniqueID, events);
+                    break;
+                case "3":
+                    events = "Click in: " + param;
+                    map.put(uniqueID, events);
+                    break;
+                case "4":
+                    events = "Sleep Time: " + target;
+                    map.put(uniqueID, events);
+                    break;
+                case "5":
+                    events = "Take photo: " + target;
+                    map.put(uniqueID, events);
+                    break;
+                case "":
+                    break;
+            }
+        } catch (Exception ex) {
+            LOG.error("Error " + ex);
+        }
+
+        return map;
     }
 
 }
