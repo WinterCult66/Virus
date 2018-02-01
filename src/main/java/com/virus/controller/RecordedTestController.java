@@ -15,12 +15,16 @@ import com.querydsl.core.Tuple;
 import com.virus.constant.ViewConstant;
 import com.virus.entity.AutomationRecordedDetailEntity;
 import com.virus.entity.AutomationRecordedItemEntity;
+import com.virus.entity.HistoryItemDetailEntity;
 import com.virus.entity.HistoryItemEntity;
 import com.virus.model.AjaxResponseBody;
 import com.virus.model.TokenModel;
+import com.virus.pojos.HistoryDetailPojo;
 import com.virus.pojos.RecordedPojo;
 import com.virus.repository.AutomationRecordedDetailRepository;
 import com.virus.repository.AutomationRecordedItemRepository;
+import com.virus.repository.HistoryItemDetailRepository;
+//import com.virus.repository.HistoryItemDetailRepository;
 import com.virus.repository.HistoryItemRepository;
 import static com.virus.util.Util.listFolder;
 import static com.virus.util.Util.folderNumberAleatory;
@@ -38,6 +42,7 @@ import java.util.concurrent.Executors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -68,10 +73,12 @@ public class RecordedTestController {
 
     @Autowired
     private AutomationRecorderDetailService automationRecorderDetailService;
-    
+
     @Autowired
     private HistoryItemRepository historyItemRepository;
 
+    @Autowired
+    private HistoryItemDetailRepository historyItemDetailRepository;
     @Autowired
     private QueryDSL queryDSL;
 
@@ -136,6 +143,7 @@ public class RecordedTestController {
     public Map processRecords(@PathVariable String id) {
         LOG.info("Enter to Method to Proccess Test Recorded");
         Map<String, Object> responseImg = new LinkedHashMap();
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         boolean enableImage = false;
         try {
@@ -145,11 +153,12 @@ public class RecordedTestController {
             MultiSeleniumRecordedTest worker = null;
             String driverName = null;
             JSONArray jsonInfo2Array = new JSONArray();
+            JSONArray stepByStep = new JSONArray();
             try {
                 ExecutorService executor = Executors.newFixedThreadPool(2);
                 for (int i = 0; i < 2; i++) {
                     driverName = Util.getNameDriver(i);
-                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList, jsonInfo2Array);
+                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList, jsonInfo2Array, stepByStep);
                     executor.execute(worker);
                 }
                 executor.shutdown();
@@ -161,6 +170,7 @@ public class RecordedTestController {
                 LOG.error("Error Proccess Thread {0}  processRecords " + ex);
             }
             try {
+                System.out.println(stepByStep);
                 objectList = worker.getObjectList();
                 jsonInfo2Array = worker.getJsonObjectInfo2Array();
                 String uniqueIDGroup = worker.getUniqueIDGroup();
@@ -169,16 +179,36 @@ public class RecordedTestController {
                 java.lang.reflect.Type type = new TypeToken<List<TokenModel>>() {
                 }.getType();
                 List<TokenModel> tokenList = gson.fromJson(stringJsonInfo, type);
+                JSONArray a = worker.getJsonObjectStepByStep2Array();
+                System.out.println(a);
 
                 for (TokenModel tokenModel : tokenList) {
-                    try{
-                    tokenModel.setUniqueidgroup(uniqueIDGroup);
-                    HistoryItemEntity historyItemEntity = null;
-                    historyItemEntity = new HistoryItemEntity(user.getUsername(), tokenModel.getUniqueid(), tokenModel.getUniqueidgroup(), tokenModel.getStartime(), tokenModel.getDriver(), tokenModel.endtime);
-                    historyItemRepository.save(historyItemEntity);
-                    LOG.info("Insert Success Histori Item {}");
-                    }catch(Exception ex){
-                        LOG.error(ex);
+                    try {
+                        tokenModel.setUniqueidgroup(uniqueIDGroup);
+                        HistoryItemEntity historyItemEntity = null;
+                        historyItemEntity = new HistoryItemEntity(user.getUsername(), tokenModel.getUniqueid(), tokenModel.getUniqueidgroup(), tokenModel.getStartime(), tokenModel.getDriver(), tokenModel.endtime);
+                        historyItemRepository.save(historyItemEntity);
+                        LOG.info("Insert Success Histori Item {}");
+//                        try {
+//                            System.out.println(stepByStep);
+//                            String stringListStepByStep = stepByStep.toString();
+//                            System.out.println(stringListStepByStep);
+//                            java.lang.reflect.Type typeHistoryDetail = new TypeToken<List<HistoryDetailPojo>>() {
+//                            }.getType();
+//                            System.out.println("TESTTTTTTT");
+//                            List<HistoryDetailPojo> historyList = gson.fromJson(stringListStepByStep, typeHistoryDetail);
+////                            List<HistoryDetailPojo> historyList = gson.fromJson(stringListStepByStep, typeHistoryDetail);
+//                            System.out.println("tamaño:" + historyList.size());
+//                            for (int index = 0; index < historyList.size(); index++) {
+//                                System.out.println("TEST" + index);
+//                            }
+//
+//                        } catch (Exception e) {
+//                            LOG.error("Insert Fail historyItemEntity Detail" + e);
+//                        }
+
+                    } catch (Exception ex) {
+                        LOG.error("Insert Fail historyItemEntity" + ex);
                     }
                 }
 

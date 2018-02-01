@@ -9,7 +9,7 @@ package com.virus.pojos;
  *
  * @author krodriguez
  */
-public class HistoryPojo {
+public class HistoryPojo  {
     
     private String driver;
     private String starttime;
