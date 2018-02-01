@@ -19,12 +19,10 @@ import com.virus.entity.HistoryItemDetailEntity;
 import com.virus.entity.HistoryItemEntity;
 import com.virus.model.AjaxResponseBody;
 import com.virus.model.TokenModel;
-import com.virus.pojos.HistoryDetailPojo;
 import com.virus.pojos.RecordedPojo;
 import com.virus.repository.AutomationRecordedDetailRepository;
 import com.virus.repository.AutomationRecordedItemRepository;
 import com.virus.repository.HistoryItemDetailRepository;
-//import com.virus.repository.HistoryItemDetailRepository;
 import com.virus.repository.HistoryItemRepository;
 import static com.virus.util.Util.listFolder;
 import static com.virus.util.Util.folderNumberAleatory;
@@ -40,11 +38,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -155,13 +151,11 @@ public class RecordedTestController {
             MultiSeleniumRecordedTest worker = null;
             String driverName = null;
             JSONArray jsonInfo2Array = new JSONArray();
-            JSONArray stepByStep = new JSONArray();
-            System.out.println(query);
             try {
                 ExecutorService executor = Executors.newFixedThreadPool(2);
                 for (int i = 0; i < 2; i++) {
                     driverName = Util.getNameDriver(i);
-                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList, jsonInfo2Array, stepByStep);
+                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList, jsonInfo2Array, i);
                     executor.execute(worker);
                 }
                 executor.shutdown();
@@ -173,7 +167,7 @@ public class RecordedTestController {
                 LOG.error("Error Proccess Thread {0}  processRecords " + ex);
             }
             try {
-                System.out.println(stepByStep);
+
                 objectList = worker.getObjectList();
                 jsonInfo2Array = worker.getJsonObjectInfo2Array();
                 String uniqueIDGroup = worker.getUniqueIDGroup();
@@ -182,8 +176,6 @@ public class RecordedTestController {
                 java.lang.reflect.Type type = new TypeToken<List<TokenModel>>() {
                 }.getType();
                 List<TokenModel> tokenList = gson.fromJson(stringJsonInfo, type);
-                JSONArray a = worker.getJsonObjectStepByStep2Array();
-                System.out.println(a);
 
                 for (TokenModel tokenModel : tokenList) {
                     try {
@@ -206,7 +198,7 @@ public class RecordedTestController {
                             String idUUID = tokenModel.getUniqueid();
                             historyItemDetailEntity = new HistoryItemDetailEntity(eventFromMap, idUUID);
                             historyItemDetailRepository.save(historyItemDetailEntity);
-                            LOG.info("Insert in Table HistoryItemDetail - To ID: " + idUUID + " : with Event: " + eventFromMap);
+                            LOG.info("Insert in Table HistoryItemDetail:" + historyItemDetailEntity.toString());
                         }
                     } catch (Exception ex) {
                         LOG.error("Insert Fail historyItemEntity" + ex);

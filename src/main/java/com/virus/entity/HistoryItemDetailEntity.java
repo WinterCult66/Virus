@@ -47,24 +47,14 @@ public class HistoryItemDetailEntity {
     public void setUniqueid(String uniqueid) {
         this.uniqueid = uniqueid;
     }
-    
-    
 
     @Override
     public String toString() {
-        return "HistoryItemDetailEntity{" + "id=" + id + ", event=" + event + '}';
+        return "HistoryItemDetailEntity{" + "id=" + id + "event=" + event + ", uniqueid=" + uniqueid + '}';
     }
 
     public HistoryItemDetailEntity(String event, String uniqueid) {
         this.event = event;
         this.uniqueid = uniqueid;
     }
-
-
-    
-    
-    
-    
-    
-
 }
