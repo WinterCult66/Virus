@@ -42,6 +42,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/records")
 public class RecordedTestController {
+
+    private String chrome;
+    private String edge;
+    private String firefox;
+    private String imageFolder;
 
     @Autowired
     private AutomationRecordedDetailRepository automationRecordedDetailRepository;
@@ -146,6 +152,7 @@ public class RecordedTestController {
         boolean enableImage = false;
         try {
             String fromMethodFolder = (folderNumberAleatory());
+            System.out.println("folder: ==== " + fromMethodFolder);
             List<Tuple> query = queryDSL.getResultByKey(id);
             List<Object> objectList = new ArrayList<Object>();
             MultiSeleniumRecordedTest worker = null;
@@ -154,9 +161,9 @@ public class RecordedTestController {
             JSONArray jsonInfo2Array = new JSONArray();
             try {
                 ExecutorService executor = Executors.newFixedThreadPool(2);
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 2; i++) {
                     driverName = Util.getNameDriver(i);
-                    folderSelenium = Util.getFolderSelenium(driverName);
+                    folderSelenium = getFolderSelenium(driverName);
                     worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList, jsonInfo2Array, i, folderSelenium);
                     executor.execute(worker);
                 }
@@ -275,6 +282,42 @@ public class RecordedTestController {
         }
 
         return map;
+    }
+
+    public static String getFolderSelenium(String folderSeleniumBrowser) {
+        String folder = null;
+        if ("Chrome".equalsIgnoreCase(folderSeleniumBrowser)) {
+            folder = ViewConstant.SELENIUM_CHROME;
+        } else if ("Explorer".equalsIgnoreCase(folderSeleniumBrowser)) {
+            folder = ViewConstant.SELENIUM_EDGE;
+        } else if ("Firefox".equalsIgnoreCase(folderSeleniumBrowser)) {
+            folder = ViewConstant.SELENIUM_FIREFOX;
+        }
+        return folder;
+    }
+
+    @Value("${selenium.chrome}")
+    public void setDriverChrome(String chrome) {
+        this.chrome = chrome;
+        ViewConstant.SELENIUM_CHROME = chrome;
+    }
+
+    @Value("${selenium.edge}")
+    public void setDriverEdge(String edge) {
+        this.edge = edge;
+        ViewConstant.SELENIUM_EDGE = edge;
+    }
+
+    @Value("${selenium.firefox}")
+    public void setDriverFirefox(String firefox) {
+        this.firefox = firefox;
+        ViewConstant.SELENIUM_FIREFOX = firefox;
+    }
+    
+        @Value("${image.folder}")
+    public void setImageFolder(String imgagefolder) {
+        this.imageFolder = imgagefolder;
+        ViewConstant.IMAGE_FOLDER = imageFolder;
     }
 
 }

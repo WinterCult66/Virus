@@ -281,13 +281,13 @@ public class MethodsController {
 
             String fromMethodFolder = (folderNumberAleatory());
             if (log.equals(on) && top.equals(on) && pin.equals(on)) {
-                result = pcterminalDomestic.login_TopUp_Pin(user, pass, "http://192.168.2.47:8888", fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+                result = pcterminalDomestic.login_TopUp_Pin(user, pass, "http://192.168.2.47:8888", fromMethodFolder, ViewConstant.SELENIUM_CHROME);
             } else if (log.equals(on) && top.equals(on) && pin.equals(off)) {
-                result = pcterminalDomestic.login_TopUp(user, pass, "http://192.168.2.47:8888", fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+                result = pcterminalDomestic.login_TopUp(user, pass, "http://192.168.2.47:8888", fromMethodFolder, ViewConstant.SELENIUM_CHROME);
             } else if (log.equals(on) && top.equals(off) && pin.equals(off)) {
-                result = pcterminalDomestic.onlyLoginLogout(user, pass, "http://192.168.2.47:8888", fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+                result = pcterminalDomestic.onlyLoginLogout(user, pass, "http://192.168.2.47:8888", fromMethodFolder, ViewConstant.SELENIUM_CHROME);
             } else if (log.equals(on) && top.equals(off) && pin.equals(on)) {
-                result = pcterminalDomestic.login_Pin(user, pass, "http://192.168.2.47:8888", fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+                result = pcterminalDomestic.login_Pin(user, pass, "http://192.168.2.47:8888", fromMethodFolder, ViewConstant.SELENIUM_CHROME);
             }
             List<String> a = listFolder(fromMethodFolder);
             Object value = result.get("1");
@@ -325,14 +325,14 @@ public class MethodsController {
             System.out.println("ENTRO DOM::::");
 
             if (log.equals(on) && act.equals(off) && actlo.equals(off)) {
-                result = pcterminalDomestic.onlyLoginLogout(user, pass, "http://192.168.2.52:8888", fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+                result = pcterminalDomestic.onlyLoginLogout(user, pass, "http://192.168.2.52:8888", fromMethodFolder, ViewConstant.SELENIUM_CHROME);
             } else if (log.equals(on) && act.equals(on) && actlo.equals(off)) {
-                result = pcterminalDomestic.activationLycaDom(user, pass, "http://192.168.2.52:8888", fromMethodFolder, sim, zip, email, clerk, ViewConstant.SELENIUM_FOLDER);
+                result = pcterminalDomestic.activationLycaDom(user, pass, "http://192.168.2.52:8888", fromMethodFolder, sim, zip, email, clerk, ViewConstant.SELENIUM_CHROME);
             } else if (log.equals(on) && act.equals(off) && actlo.equals(on)) {
-                result = pcterminalDomestic.activationLocusDom(user, pass, "http://192.168.2.52:8888", fromMethodFolder, esn, npa, "231123", "Bogota", zip, clerk, ViewConstant.SELENIUM_FOLDER);
+                result = pcterminalDomestic.activationLocusDom(user, pass, "http://192.168.2.52:8888", fromMethodFolder, esn, npa, "231123", "Bogota", zip, clerk, ViewConstant.SELENIUM_CHROME);
             } else if (log.equals(on) && act.equals(on) && actlo.equals(on)) {
                 result = pcterminalDomestic.activationLyca_Locus_Dom(user, pass, "http://192.168.2.52:8888", fromMethodFolder, sim, esn,
-                        npa, "4654654", "Bogota", zip, email, clerk, ViewConstant.SELENIUM_FOLDER);
+                        npa, "4654654", "Bogota", zip, email, clerk, ViewConstant.SELENIUM_CHROME);
             }
             List<String> a = listFolder(fromMethodFolder);
             Object value = result.get("1");
@@ -366,7 +366,7 @@ public class MethodsController {
             String fromMethodFolder = (folderNumberAleatory());
             System.out.println("ENTRO MEX::::");
 
-            result = seleniumPaymentRequest.PaymentRequest("http://192.168.2.47:8888", user, pass, acc, date, val, fromMethodFolder, ViewConstant.SELENIUM_FOLDER);
+            result = seleniumPaymentRequest.PaymentRequest("http://192.168.2.47:8888", user, pass, acc, date, val, fromMethodFolder, ViewConstant.SELENIUM_CHROME);
             List<String> a = listFolder(fromMethodFolder);
             Object value = result.get("1");
             System.out.println(value);
@@ -384,7 +384,7 @@ public class MethodsController {
         Map<String, Object> responseImg = new LinkedHashMap();
         try {
             String fromMethodFolder = (folderNumberAleatory());
-            seleniumDynamic.ReadFile(convert(multipartFile), ViewConstant.SELENIUM_FOLDER, fromMethodFolder);
+            seleniumDynamic.ReadFile(convert(multipartFile), ViewConstant.SELENIUM_CHROME, fromMethodFolder);
             List<String> a = listFolder(fromMethodFolder);
             responseImg.put("gs", a.toString());
         } catch (IOException IOException) {
@@ -475,10 +475,10 @@ public class MethodsController {
         ViewConstant.IMAGE_FOLDER = imageFolder;
     }
 
-    @Value("${selenium.folder}")
+    @Value("${selenium.chrome}")
     public void setSeleniumFolder(String seleniumFolder) {
         this.seleniumfolder = seleniumFolder;
-        ViewConstant.SELENIUM_FOLDER = seleniumfolder;
+        ViewConstant.SELENIUM_CHROME = seleniumfolder;
     }
 
     @Value("${csv.folder}")

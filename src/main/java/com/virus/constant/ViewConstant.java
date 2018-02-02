@@ -30,7 +30,9 @@ public class ViewConstant {
     
     public static  String IMAGE_URL;
     public static  String IMAGE_FOLDER;
-    public static  String SELENIUM_FOLDER;
+    public static  String SELENIUM_CHROME;
+    public static  String SELENIUM_EDGE;
+    public static  String SELENIUM_FIREFOX;
     public static  String CSV_FOLDER;     
     
 }

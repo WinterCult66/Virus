@@ -17,10 +17,14 @@ public class Virus {
     private String imageURL;
     @Value("${image.folder}")
     private String folder;
-    @Value("${selenium.folder}")
-    private String seleniumFolder;
+    @Value("${selenium.chrome}")
+    private String seleniumChrome;
+    @Value("${selenium.firefox}")
+    private String seleniumFirefox;
     @Value("${csv.folder}")
     private String csvFolder;
+    @Value("${selenium.edge}")
+    private String seleniumEdge;
 //    @Value("${folder.img}")
 //    private  String folderSystem;
 
@@ -37,7 +41,9 @@ public class Virus {
     private void init() {
         LOG.info("# Images URL  : {}       " + imageURL);
         LOG.info("# ImageFolder   : {}       " + folder);
-        LOG.info("# seleniumFolder   : {}       " + seleniumFolder);
+        LOG.info("# Selenium Folder chrome   : {}       " + seleniumChrome);
+        LOG.info("# Selenium Folder Edge  : {}    " + seleniumEdge);
+        LOG.info("# Selenium Folder Firefox  : {}    " + seleniumFirefox);
         LOG.info("# csvFolder   : {}       " + csvFolder);
 
     }
