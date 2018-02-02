@@ -150,12 +150,14 @@ public class RecordedTestController {
             List<Object> objectList = new ArrayList<Object>();
             MultiSeleniumRecordedTest worker = null;
             String driverName = null;
+            String folderSelenium;
             JSONArray jsonInfo2Array = new JSONArray();
             try {
                 ExecutorService executor = Executors.newFixedThreadPool(2);
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i < 3; i++) {
                     driverName = Util.getNameDriver(i);
-                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList, jsonInfo2Array, i);
+                    folderSelenium = Util.getFolderSelenium(driverName);
+                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList, jsonInfo2Array, i, folderSelenium);
                     executor.execute(worker);
                 }
                 executor.shutdown();
