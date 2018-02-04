@@ -151,8 +151,15 @@ public class RecordedTestController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         boolean enableImage = false;
         try {
-            String fromMethodFolder = (folderNumberAleatory());
-            System.out.println("folder: ==== " + fromMethodFolder);
+            List<String> listFolders = new ArrayList<>();
+            System.out.println("ENTRANDO");
+            String fromMethodFolder = "";
+            for (int i = 0; i < 2; i++) {
+                System.out.println("EMPEZANDO 2");
+                fromMethodFolder = (folderNumberAleatory(i));
+                listFolders.add(fromMethodFolder);
+            }
+            System.out.println(fromMethodFolder);
             List<Tuple> query = queryDSL.getResultByKey(id);
             List<Object> objectList = new ArrayList<Object>();
             MultiSeleniumRecordedTest worker = null;
@@ -164,7 +171,7 @@ public class RecordedTestController {
                 for (int i = 0; i < 2; i++) {
                     driverName = Util.getNameDriver(i);
                     folderSelenium = getFolderSelenium(driverName);
-                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, fromMethodFolder, objectList, jsonInfo2Array, i, folderSelenium);
+                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, listFolders.get(i), objectList, jsonInfo2Array, i, folderSelenium);
                     executor.execute(worker);
                 }
                 executor.shutdown();
@@ -225,8 +232,10 @@ public class RecordedTestController {
             } catch (Exception ex) {
                 LOG.error(ex);
             }
-            List<String> a = listFolder(fromMethodFolder);
+            List<String> a = listFolder(listFolders.get(0));
+            List<String> b = listFolder(listFolders.get(1));
             responseImg.put("gs", a.toString());
+            responseImg.put("es", b.toString());
             responseImg.put("image", enableImage);
         } catch (Exception ex) {
             LOG.error("Error Proccess Records {0}  processRecords " + ex);
@@ -313,8 +322,8 @@ public class RecordedTestController {
         this.firefox = firefox;
         ViewConstant.SELENIUM_FIREFOX = firefox;
     }
-    
-        @Value("${image.folder}")
+
+    @Value("${image.folder}")
     public void setImageFolder(String imgagefolder) {
         this.imageFolder = imgagefolder;
         ViewConstant.IMAGE_FOLDER = imageFolder;

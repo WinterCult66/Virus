@@ -22,21 +22,33 @@ public class Util {
 
     private static final Log LOG = LogFactory.getLog(ContactController.class);
 
-    public static String folderNumberAleatory() {
+    public static String folderNumberAleatory(int i) {
+
+        String folderComplete = null;
         Random generador = new Random();
         int d1 = generador.nextInt(100);
         int d2 = generador.nextInt(200);
         int d3 = generador.nextInt(300);
         int d4 = generador.nextInt(400);
         int foldernumber = d1 + d2 + d3 + d4;
-        File dir = new File((ViewConstant.IMAGE_FOLDER + "\\" + foldernumber));
-        String folderComplete = ViewConstant.IMAGE_FOLDER + "\\" + foldernumber;
+        File dir = null;
+        String driverFolder = null;
+        if (i == 0) {
+            driverFolder = "chrome";
+        } else if (i == 1) {
+            driverFolder = "edge";
+        } else {
+            driverFolder = "";
+        }
+        dir = new File((ViewConstant.IMAGE_FOLDER + "\\" + driverFolder + "\\" + foldernumber));
+        folderComplete = ViewConstant.IMAGE_FOLDER + "\\" + driverFolder + "\\" + foldernumber;
         dir.mkdir();
         return folderComplete;
     }
 
     public static List<String> listFolder(String directory) {
         String sDirectorio = directory;
+        System.out.println(sDirectorio);
         List<String> imagesList = new ArrayList<String>();
         File f = new File(sDirectorio);
         if (f.exists()) {
@@ -44,12 +56,14 @@ public class Util {
             for (int i = 0; i < ficheros.length; i++) {
                 String[] parts = ficheros[i].getAbsolutePath().split("\\\\");
                 int partsInt = parts.length;
-                imagesList.add(ViewConstant.IMAGE_URL + parts[partsInt - 2] + "\\" + parts[partsInt - 1]);
+                imagesList.add(ViewConstant.IMAGE_URL + parts[partsInt - 3] + "\\" + parts[partsInt - 2] + "\\" + parts[partsInt - 1]);
                 LOG.info("Send Paths Images: >>>>> " + ViewConstant.IMAGE_URL + parts[partsInt - 2] + "\\" + parts[partsInt - 1]);
             }
         } else {
             LOG.info(ViewConstant.ERROR_FOLDER);
         }
+        
+        System.out.println(imagesList);
         return imagesList;
     }
 }
