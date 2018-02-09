@@ -7,6 +7,8 @@ import com.emida.methods.FacadeLogin2;
 import com.emida.methods.FacadeLogout;
 import com.emida.methods.FacadePinDistSale;
 import com.emida.selenium.PcterminalDomestic;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import com.emida.selenium.SeleniumDynamic;
 import com.emida.selenium.mexico.SeleniumPaymentRequest;
 import com.google.gson.Gson;
@@ -142,26 +144,20 @@ public class MethodsController {
             @RequestParam("invoice") String invoice) {
 
         try {
-            /*String url = "http://192.168.2.44:82/soap/servlet/rpcrouter";
-            System.out.println("### " + language + " ###" + versionn
-                    + " ###" + terminalid + " ###" + clerkid + " ###" + productid
-                    + " ###" + amount + " ###" + account + " ###" + invoice);
 
-            String result = facadePinDistSale.pinDistSale(url, versionn, terminalid, clerkid, productid, account, amount, invoice, language);
-            String xmlresponse = formatter.format(result);
-            Map<String, Object> response = new LinkedHashMap();
-            response.put("success", true);
-            response.put("data", xmlresponse);
-            return response;*/
+            ExecutorService executor = Executors.newFixedThreadPool(1);
+            PinDistSaleThread worker = null;
             for (int i = 0; i < 1; i++) {
-//                PinDistSaleThread thread = new PinDistSaleThread(language, versionn, terminalid, clerkid, productid, amount, account, i + "");
-                PinDistSaleThread thread = new PinDistSaleThread(language, versionn, terminalid, clerkid, productid, amount, account, invoice);
-                thread.start();
-                Thread.sleep(100);
+                worker = new PinDistSaleThread(language, versionn, terminalid, clerkid, productid, amount, account, invoice);
+                executor.execute(worker);
+            }
+
+            executor.shutdown();
+            while (!executor.isTerminated()) {
             }
             Map<String, Object> response = new LinkedHashMap();
             response.put("success", true);
-            response.put("data", "Holaaaa");
+            response.put("data", worker.getXmlresponse());
             return response;
         } catch (Exception e) {
             System.out.println("Error " + e);
