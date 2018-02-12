@@ -22,6 +22,7 @@ public class HistoryItemDetailEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String event;
+    private int status;
     private String uniqueid;
 
     public Integer getId() {
@@ -48,13 +49,22 @@ public class HistoryItemDetailEntity {
         this.uniqueid = uniqueid;
     }
 
-    @Override
-    public String toString() {
-        return "HistoryItemDetailEntity{" + "id=" + id + "event=" + event + ", uniqueid=" + uniqueid + '}';
+    public int getStatus() {
+        return status;
     }
 
-    public HistoryItemDetailEntity(String event, String uniqueid) {
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "HistoryItemDetailEntity{"+ "event=" + event + ", status=" + status + ", uniqueid=" + uniqueid + '}';
+    }
+
+    public HistoryItemDetailEntity(String event, int status, String uniqueid) {
         this.event = event;
+        this.status = status;
         this.uniqueid = uniqueid;
     }
 }

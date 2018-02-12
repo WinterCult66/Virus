@@ -6,7 +6,7 @@
 package com.virus.controller;
 
 import com.emida.selenium.SeleniumRecordedTest;
-import com.emida.selenium.multibrowser.MultiSeleniumRecordedTest;
+import com.virus.seleniumP.MultiSeleniumRecordedTest;
 import com.emida.util.Util;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.google.gson.Gson;
@@ -29,6 +29,7 @@ import static com.virus.util.Util.folderNumberAleatory;
 import com.virus.repository.QueryDSL;
 import com.virus.services.AutomationRecordedItemService;
 import com.virus.services.AutomationRecorderDetailService;
+import com.virus.util.SaveDetailMultiBrowser;
 import com.virus.views.Views;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,9 +83,10 @@ public class RecordedTestController {
     private HistoryItemRepository historyItemRepository;
 
     @Autowired
-    private HistoryItemDetailRepository historyItemDetailRepository;
-    @Autowired
     private QueryDSL queryDSL;
+
+    @Autowired
+    private HistoryItemDetailRepository historyItemDetailRepository;
 
     private static final Log LOG = LogFactory.getLog(RecordedTestController.class);
 
@@ -152,10 +154,8 @@ public class RecordedTestController {
         boolean enableImage = false;
         try {
             List<String> listFolders = new ArrayList<>();
-            System.out.println("ENTRANDO");
             String fromMethodFolder = "";
             for (int i = 0; i < 2; i++) {
-                System.out.println("EMPEZANDO 2");
                 fromMethodFolder = (folderNumberAleatory(i));
                 listFolders.add(fromMethodFolder);
             }
@@ -167,11 +167,12 @@ public class RecordedTestController {
             String folderSelenium;
             JSONArray jsonInfo2Array = new JSONArray();
             try {
-                ExecutorService executor = Executors.newFixedThreadPool(2);
-                for (int i = 0; i < 2; i++) {
+                ExecutorService executor = Executors.newFixedThreadPool(1);
+                for (int i = 0; i < 1; i++) {
                     driverName = Util.getNameDriver(i);
                     folderSelenium = getFolderSelenium(driverName);
-                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub", query, listFolders.get(i), objectList, jsonInfo2Array, i, folderSelenium);
+                    worker = new MultiSeleniumRecordedTest(driverName, "http://localhost:4215/wd/hub",
+                            query, listFolders.get(i), objectList, jsonInfo2Array, i, folderSelenium, historyItemDetailRepository);
                     executor.execute(worker);
                 }
                 executor.shutdown();
@@ -197,36 +198,19 @@ public class RecordedTestController {
                     try {
                         tokenModel.setUniqueidgroup(uniqueIDGroup);
                         HistoryItemEntity historyItemEntity = null;
-                        HistoryItemDetailEntity historyItemDetailEntity = null;
                         historyItemEntity = new HistoryItemEntity(user.getUsername(), tokenModel.getUniqueid(), tokenModel.getUniqueidgroup(), tokenModel.getStartime(), tokenModel.getDriver(), tokenModel.endtime);
                         historyItemRepository.save(historyItemEntity);
                         LOG.info("Insert in Table HistoryItem: " + historyItemEntity.toString());
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        for (Tuple item : query) {
-                            Object oXpath = item.toArray()[0];
-                            Object oOption = item.toArray()[1];
-                            Object oValue = item.toArray()[2];
-                            String xpath = String.valueOf(oXpath);
-                            String option = String.valueOf(oOption);
-                            String value = String.valueOf(oValue);
-                            map = addInfofromTuple(option, value, xpath, tokenModel.getUniqueid());
-                            String eventFromMap = map.get(tokenModel.getUniqueid());
-                            String idUUID = tokenModel.getUniqueid();
-                            historyItemDetailEntity = new HistoryItemDetailEntity(eventFromMap, idUUID);
-                            historyItemDetailRepository.save(historyItemDetailEntity);
-                            LOG.info("Insert in Table HistoryItemDetail:" + historyItemDetailEntity.toString());
-                        }
                     } catch (Exception ex) {
                         LOG.error("Insert Fail historyItemEntity" + ex);
                     }
                 }
-
-                LOG.info("Insert Success Histori's Item");
-                LOG.info("Insert Success Histori Details Item");
+                LOG.info("Verify if Take Image");
                 for (Object str : objectList) {
                     Object option = "5";
                     if (str.equals(option)) {
                         enableImage = true;
+                        LOG.info("Image = " + enableImage);
                     }
                 }
             } catch (Exception ex) {

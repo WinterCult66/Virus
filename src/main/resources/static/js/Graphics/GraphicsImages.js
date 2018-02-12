@@ -17,7 +17,8 @@ function GraphicsImages() {
     instance.DrawGraphic = function (msg) {
 
 
-        if (msg !== undefined && msg !== null) {
+        if (msg.gs !== undefined && msg.gs !== null
+                && msg.es !== undefined && msg.es !== null) {
             var pathImages = msg.gs.replace("[", "").replace("]", "").split(",");
             var pathEdges = msg.es.replace("[", "").replace("]", "").split(",");
 
@@ -59,6 +60,11 @@ function GraphicsImages() {
                     "closeButton": true
                 };
             }
+        } else {
+            toastr.error("Variable Undefined");
+            toastr.options = {
+                "closeButton": true
+            };
         }
     }
 }

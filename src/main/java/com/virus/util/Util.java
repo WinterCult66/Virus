@@ -48,7 +48,6 @@ public class Util {
 
     public static List<String> listFolder(String directory) {
         String sDirectorio = directory;
-        System.out.println(sDirectorio);
         List<String> imagesList = new ArrayList<String>();
         File f = new File(sDirectorio);
         if (f.exists()) {
@@ -62,8 +61,6 @@ public class Util {
         } else {
             LOG.info(ViewConstant.ERROR_FOLDER);
         }
-        
-        System.out.println(imagesList);
         return imagesList;
     }
 }
