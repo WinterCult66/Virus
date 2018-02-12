@@ -6,9 +6,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-
+@EnableScheduling
 public class Virus {
 
     private static final Log LOG = LogFactory.getLog(Virus.class);
@@ -25,16 +26,14 @@ public class Virus {
     private String csvFolder;
     @Value("${selenium.edge}")
     private String seleniumEdge;
-//    @Value("${folder.img}")
-//    private  String folderSystem;
+    @Value("${scheduler}")
+    private boolean scheduler;
 
     public static void main(String[] args) {
 
         LOG.info("Start Main");
         SpringApplication.run(Virus.class, args);
         System.out.println();
-        //LOG.info(imageURL);
-
     }
 
     @PostConstruct
@@ -45,6 +44,7 @@ public class Virus {
         LOG.info("# Selenium Folder Edge  : {}    " + seleniumEdge);
         LOG.info("# Selenium Folder Firefox  : {}    " + seleniumFirefox);
         LOG.info("# csvFolder   : {}       " + csvFolder);
+        LOG.info("# scheduler   : {}       " + scheduler);
 
     }
 }

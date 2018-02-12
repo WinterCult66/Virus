@@ -33,6 +33,12 @@ public class ViewConstant {
     public static  String SELENIUM_CHROME;
     public static  String SELENIUM_EDGE;
     public static  String SELENIUM_FIREFOX;
-    public static  String CSV_FOLDER;     
+    public static  String CSV_FOLDER; 
+    
+    
+    //////SCHEDULER
+    
+    public static boolean SCHEDULER_METHOD;
+    public static int TIME_EXECUTE;
     
 }
