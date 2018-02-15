@@ -12,6 +12,7 @@ import com.virus.entity.Login2MethodEntity;
 import com.virus.entity.QAutomationRecordedDetailEntity;
 import com.virus.entity.QAutomationRecordedItemEntity;
 import com.virus.entity.QLogin2MethodEntity;
+import com.virus.entity.QTerminalSales2WSEntity;
 import com.virus.entity.QUserr;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -26,22 +27,24 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class QueryDSL {
-
+    
     private QUserr qUserr = QUserr.userr;
     private QAutomationRecordedDetailEntity qAutDetail = QAutomationRecordedDetailEntity.automationRecordedDetailEntity;
     private QAutomationRecordedItemEntity qAutItem = QAutomationRecordedItemEntity.automationRecordedItemEntity;
     private QLogin2MethodEntity qLogin2MethodEntity = QLogin2MethodEntity.login2MethodEntity;
+    private QTerminalSales2WSEntity qTerminalSales2WSEntity = QTerminalSales2WSEntity.terminalSales2WSEntity;
+    
     private static final Log LOG = LogFactory.getLog(QueryDSL.class);
-
+    
     @PersistenceContext
     private EntityManager em;
-
+    
     public void findByUser(String user) {
-
+        
     }
-
+    
     public List<Tuple> getResultByKey(String key) {
-
+        
         List<Tuple> listDetailRecorded = null;
         try {
             JPAQuery<AutomationRecordedDetailEntity> query = new JPAQuery<AutomationRecordedDetailEntity>(em);
@@ -56,7 +59,7 @@ public class QueryDSL {
         }
         return listDetailRecorded;
     }
-
+    
     public List<Tuple> getResultByUser(String userName) {
         List<Tuple> listItemRecorded = null;
         try {
@@ -72,20 +75,35 @@ public class QueryDSL {
         }
         return listItemRecorded;
     }
-
+    
     public List<Tuple> getUser2LoginMethodWebServices() {
         List<Tuple> listUsers2WS = null;
         try {
             JPAQuery<Login2MethodEntity> query = new JPAQuery<Login2MethodEntity>(em);
             listUsers2WS = query.select(qLogin2MethodEntity.lan, qLogin2MethodEntity.version, qLogin2MethodEntity.user,
-                     qLogin2MethodEntity.pass)
+                    qLogin2MethodEntity.pass)
                     .from(qLogin2MethodEntity).fetch();
-            LOG.info("Execute Query Select getUser2LoginMethodWebServices Success" );
+            LOG.info("Execute Query Select getUser2LoginMethodWebServices Success");
         } catch (Exception ex) {
             LOG.error("Error Execute Query Select getUser2LoginMethodWebServices " + ex);
         }
         return listUsers2WS;
         
     }
-
+    
+    public List<Tuple> getTerminal2PindistSaleMethodWebServices() {
+        List<Tuple> listTerminal2WS = null;
+        try {
+            JPAQuery<QTerminalSales2WSEntity> query = new JPAQuery<QTerminalSales2WSEntity>(em);
+            listTerminal2WS = query.select(qTerminalSales2WSEntity.terminalid, qTerminalSales2WSEntity.id)
+                    .from(qTerminalSales2WSEntity)
+                    .fetch();
+            LOG.info("Execute Query Select getUser2LoginMethodWebServices Success");
+        } catch (Exception ex) {
+            LOG.error("Error Execute Query Select getUser2LoginMethodWebServices " + ex);
+        }
+        return listTerminal2WS;
+        
+    }
+    
 }
