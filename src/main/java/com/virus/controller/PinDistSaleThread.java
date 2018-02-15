@@ -7,6 +7,8 @@ package com.virus.controller;
 
 import com.emida.methods.FacadePinDistSale;
 import com.virus.xmlutil.XmlFormatter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -14,6 +16,7 @@ import com.virus.xmlutil.XmlFormatter;
  */
 public class PinDistSaleThread implements Runnable {
 
+    private static final Log LOG = LogFactory.getLog(PinDistSaleThread.class);
     String language;
     String versionn;
     String terminalid;
@@ -55,17 +58,17 @@ public class PinDistSaleThread implements Runnable {
 
     public void initPinDistSale() {
         try {
-            System.out.println("Start PinDistSale");
+            LOG.info("Start PinDistSale");
             String url = "http://192.168.2.59:8080/soap/servlet/rpcrouter";
             System.out.println(toString());
             XmlFormatter formatter = new XmlFormatter();
             FacadePinDistSale facadePinDistSale = new FacadePinDistSale();
             String result = facadePinDistSale.pinDistSale(url, versionn, terminalid, clerkid, productid, account, amount, invoice, language);
             xmlresponse = formatter.format(result);
-            System.out.println(xmlresponse);
-            System.out.println("End PindistSale");
+            LOG.info(xmlresponse);
+            LOG.info("End PindistSale");
         } catch (Exception ex) {
-            System.out.println(ex);
+            LOG.warn("Error initPinDistSale: " + ex);
         }
     }
 

@@ -28,16 +28,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledPinDistSale {
 
-    private boolean scheduler;
-
     @Autowired
     private QueryDSL queryDSL;
 
+    private boolean scheduler;
     private String language = "1";
+
     private static final Logger LOG = Logger.getLogger(ScheduledPinDistSale.class.getName());
 
-    @Scheduled(fixedRate = 5000000)
+    @Scheduled(fixedRate = 30000)
     public void reportCurrentTime() throws InterruptedException {
+
+        loginWebServices();
+        Thread.sleep(10000);
+        pindDistSaleWebServices();
+    }
+
+    private void loginWebServices() {
         List<Tuple> listUser = queryDSL.getUser2LoginMethodWebServices();
         try {
             LOG.info("Start Login Terminals in Web Services.");
@@ -56,7 +63,9 @@ public class ScheduledPinDistSale {
         } catch (Exception ex) {
             LOG.warning("Exception Encontuered en Login Terminals in Web Services. " + ex);
         }
-        Thread.sleep(5000);
+    }
+
+    private void pindDistSaleWebServices() {
         try {
             LOG.info("Start PindisTSale in Web Services.");
             startPinDistSale();
@@ -64,17 +73,29 @@ public class ScheduledPinDistSale {
         } catch (Exception ex) {
             LOG.warning("Exception Encontuered en Proccess PinDistale in Web Services. " + ex);
         }
+    }
 
+    private void startLogin(String language, String version, String user, String pass) {
+        if (scheduler) {
+            ExecutorService executor = Executors.newFixedThreadPool(99);
+            LoginThread worker = null;
+            worker = new LoginThread(language, version, user, pass);
+            executor.execute(worker);
+            executor.shutdown();
+            executor.shutdownNow();
+        }
     }
 
     private void startPinDistSale() throws InterruptedException {
         if (scheduler) {
-            ExecutorService executor = Executors.newFixedThreadPool(200);
+            ExecutorService executor = Executors.newFixedThreadPool(99);
             PinDistSaleThread worker = null;
-            for (int i = 0; i < 100; i++) {
-                String productID = bagProduct(randInt(0, 7));
-                String terminalID = bagTerminal(randInt(0, 10));
-                worker = new PinDistSaleThread(language, "1", terminalID, "1234", productID, "0.1", "121", "" + i);
+            int invoice = randInt(100, 200);
+            for (int i = 0; i < 5; i++) {
+                invoice++;
+                String productID = getProduct();
+                String terminalID = getTerminal();
+                worker = new PinDistSaleThread(language, "1", terminalID, "1234", productID, "1", "1234567", "" + invoice);
                 executor.execute(worker);
                 Thread.sleep(500);
             }
@@ -83,47 +104,18 @@ public class ScheduledPinDistSale {
         }
     }
 
-    private void startLogin(String language, String version, String user, String pass) {
-        if (scheduler) {
-            ExecutorService executor = Executors.newFixedThreadPool(4);
-            LoginThread worker = null;
-            worker = new LoginThread(language, version, user, pass);
-            executor.execute(worker);
-            executor.shutdown();
-            executor.shutdownNow();
-
-        }
+    private String getTerminal() {
+        int countTerminals = queryDSL.getCountTerminals();
+        int maxTerminal = countTerminals + 1;
+        String terminalID = queryDSL.getTerminal2PindistSaleMethodWebServices(randInt(1, maxTerminal));
+        return terminalID;
     }
 
-    private String bagTerminal(int i) {
-        String terminal;
-        List<String> terminalList = new ArrayList();
-        terminalList.add("8866367");
-        terminalList.add("8325985");
-        terminalList.add("8533257");
-        terminalList.add("2188494");
-        terminalList.add("2237911");
-        terminalList.add("3063199");
-        terminalList.add("4071966");
-        terminalList.add("9242953");
-        terminalList.add("2590651");
-        terminalList.add("8503767");
-        terminal = terminalList.get(i);
-        return terminal;
-    }
-
-    private String bagProduct(int i) {
-        String product;
-        List<String> productList = new ArrayList();
-        productList.add("170");
-        productList.add("171");
-        productList.add("174");
-        productList.add("1274");
-        productList.add("101170");
-        productList.add("101174");
-        productList.add("8000000");
-        product = productList.get(i);
-        return product;
+    private String getProduct() {
+        int countProducts = queryDSL.getCountProducts();
+        int maxProduct = countProducts + 1;
+        String productID = queryDSL.getProduct2PindistSaleMethodWebServices(randInt(1, maxProduct));
+        return productID;
     }
 
     private int randInt(int min, int max) {
