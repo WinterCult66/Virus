@@ -10,7 +10,6 @@ import com.virus.threads.LoginThread;
 import com.virus.constant.ViewConstant;
 import com.virus.controller.PinDistSaleThread;
 import com.virus.repository.QueryDSL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -45,23 +44,25 @@ public class ScheduledPinDistSale {
     }
 
     private void loginWebServices() {
-        List<Tuple> listUser = queryDSL.getUser2LoginMethodWebServices();
-        try {
-            LOG.info("Start Login Terminals in Web Services.");
-            for (Tuple item : listUser) {
-                Object oLan = item.toArray()[0];
-                Object oVer = item.toArray()[1];
-                Object oUser = item.toArray()[2];
-                Object oPass = item.toArray()[3];
-                String lan = String.valueOf(oLan);
-                String ver = String.valueOf(oVer);
-                String user = String.valueOf(oUser);
-                String pass = String.valueOf(oPass);
-                startLogin(lan, ver, user, pass);
+        if (scheduler) {
+            List<Tuple> listUser = queryDSL.getUser2LoginMethodWebServices();
+            try {
+                LOG.info("Start Login Terminals in Web Services.");
+                for (Tuple item : listUser) {
+                    Object oLan = item.toArray()[0];
+                    Object oVer = item.toArray()[1];
+                    Object oUser = item.toArray()[2];
+                    Object oPass = item.toArray()[3];
+                    String lan = String.valueOf(oLan);
+                    String ver = String.valueOf(oVer);
+                    String user = String.valueOf(oUser);
+                    String pass = String.valueOf(oPass);
+                    startLogin(lan, ver, user, pass);
+                }
+                LOG.info("Finish Login Terminals Success in Web Services.");
+            } catch (Exception ex) {
+                LOG.warning("Exception Encontuered en Login Terminals in Web Services. " + ex);
             }
-            LOG.info("Finish Login Terminals Success in Web Services.");
-        } catch (Exception ex) {
-            LOG.warning("Exception Encontuered en Login Terminals in Web Services. " + ex);
         }
     }
 

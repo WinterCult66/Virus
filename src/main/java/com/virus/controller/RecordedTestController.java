@@ -161,6 +161,22 @@ public class RecordedTestController {
         return mav;
     }
 
+    @RequestMapping("/showreportss/{id}")
+    public Map showReportsDetail(@PathVariable String id) {
+        LOG.info("Enter to Method to Show Reports Detail Recorded");
+        Map<String, Object> detailHistory = new LinkedHashMap();
+        try {            
+            List<Tuple> query = queryDSL.getHistoryItemDetail(id);
+            
+            String json = new Gson().toJson(query);
+            System.out.println(json);
+            detailHistory.put("history", json);
+        } catch (Exception ex) {
+            LOG.error("Error showreports " + ex);
+        }
+        return detailHistory;
+    }
+
     @RequestMapping("/processrecords/{id}")
     public Map processRecords(@PathVariable String id) {
         LOG.info("Enter to Method to Proccess Test Recorded");

@@ -11,6 +11,7 @@ import com.virus.entity.AutomationRecordedDetailEntity;
 import com.virus.entity.Login2MethodEntity;
 import com.virus.entity.QAutomationRecordedDetailEntity;
 import com.virus.entity.QAutomationRecordedItemEntity;
+import com.virus.entity.QHistoryItemDetailEntity;
 import com.virus.entity.QHistoryItemEntity;
 import com.virus.entity.QLogin2MethodEntity;
 import com.virus.entity.QProductsSales2WSEntity;
@@ -37,6 +38,7 @@ public class QueryDSL {
     private QTerminalSales2WSEntity qTerminalSales2WSEntity = QTerminalSales2WSEntity.terminalSales2WSEntity;
     private QProductsSales2WSEntity qProductsSales2WSEntity = QProductsSales2WSEntity.productsSales2WSEntity;
     private QHistoryItemEntity qHistoryItemEntity = QHistoryItemEntity.historyItemEntity;
+    private QHistoryItemDetailEntity qHistoryItemDetailEntity = QHistoryItemDetailEntity.historyItemDetailEntity;
 
     private static final Log LOG = LogFactory.getLog(QueryDSL.class);
 
@@ -86,7 +88,8 @@ public class QueryDSL {
         List<Tuple> listItemRecorded = null;
         try {
             JPAQuery<QHistoryItemEntity> query = new JPAQuery<QHistoryItemEntity>(em);
-            listItemRecorded = query.select(qHistoryItemEntity.driver, qHistoryItemEntity.startime, qHistoryItemEntity.endtime)
+            listItemRecorded = query.select(qHistoryItemEntity.driver, qHistoryItemEntity.startime, qHistoryItemEntity.endtime,
+                    qHistoryItemEntity.uniqueidgroup, qHistoryItemEntity.uniqueid)
                     .from(qHistoryItemEntity)
                     .where(qHistoryItemEntity.user
                             .eq(userName))
@@ -94,6 +97,23 @@ public class QueryDSL {
             LOG.info("Execute Query Select getHistoryItem Success");
         } catch (Exception ex) {
             LOG.error("Error Execute Query Select  getHistoryItem Fail : " + ex);
+        }
+        return listItemRecorded;
+    }
+
+    // Method to Get History Items Details
+    public List<Tuple> getHistoryItemDetail(String UUID) {
+        List<Tuple> listItemRecorded = null;
+        try {
+            JPAQuery<QHistoryItemDetailEntity> query = new JPAQuery<QHistoryItemDetailEntity>(em);
+            listItemRecorded = query.select(qHistoryItemDetailEntity.event, qHistoryItemDetailEntity.status)
+                    .from(qHistoryItemDetailEntity)
+                    .where(qHistoryItemDetailEntity.uniqueid
+                            .eq(UUID))
+                    .fetch();
+            LOG.info("Execute Query Select getHistoryItemDetail Success");
+        } catch (Exception ex) {
+            LOG.error("Error Execute Query Select  getHistoryItemDetail Fail : " + ex);
         }
         return listItemRecorded;
     }
