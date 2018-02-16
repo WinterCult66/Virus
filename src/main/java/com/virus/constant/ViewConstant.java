@@ -15,11 +15,14 @@ public class ViewConstant {
     public static final String SELENIUM = "methodsemida";
     public static final String SHOWRECORDS = "showrecords";
     public static final String ADDRECORDS = "addrecords";
+    public static final String SHOWREPORTS = "showreports";
     
     
     //////PATH'S
     public static final String PATH_SHOWMETHODS = "redirect:/methods/showmethods";
     public static final String PATH_SHOWRECORDS = "redirect:/records/showrecorded";
+    public static final String PATH_SHOWREPORTS = "redirect:/records/showreports";
+    
     
     ///////ERRORS
     public static final String ERROR_METHODS = "Ha ocurrido un error, para mas informacion Revise el LOG del Soap ";

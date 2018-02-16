@@ -11,6 +11,7 @@ import com.virus.entity.AutomationRecordedDetailEntity;
 import com.virus.entity.Login2MethodEntity;
 import com.virus.entity.QAutomationRecordedDetailEntity;
 import com.virus.entity.QAutomationRecordedItemEntity;
+import com.virus.entity.QHistoryItemEntity;
 import com.virus.entity.QLogin2MethodEntity;
 import com.virus.entity.QProductsSales2WSEntity;
 import com.virus.entity.QTerminalSales2WSEntity;
@@ -35,6 +36,7 @@ public class QueryDSL {
     private QLogin2MethodEntity qLogin2MethodEntity = QLogin2MethodEntity.login2MethodEntity;
     private QTerminalSales2WSEntity qTerminalSales2WSEntity = QTerminalSales2WSEntity.terminalSales2WSEntity;
     private QProductsSales2WSEntity qProductsSales2WSEntity = QProductsSales2WSEntity.productsSales2WSEntity;
+    private QHistoryItemEntity qHistoryItemEntity = QHistoryItemEntity.historyItemEntity;
 
     private static final Log LOG = LogFactory.getLog(QueryDSL.class);
 
@@ -62,6 +64,7 @@ public class QueryDSL {
         return listDetailRecorded;
     }
 
+    // Method to Get List Items
     public List<Tuple> getResultByUser(String userName) {
         List<Tuple> listItemRecorded = null;
         try {
@@ -74,6 +77,23 @@ public class QueryDSL {
             LOG.info("Execute Query Select {0} getResultByUser");
         } catch (Exception ex) {
             LOG.error("Error Execute Query Select {0} getResultByUser" + ex);
+        }
+        return listItemRecorded;
+    }
+
+    // Method to Get History Items
+    public List<Tuple> getHistoryItem(String userName) {
+        List<Tuple> listItemRecorded = null;
+        try {
+            JPAQuery<QHistoryItemEntity> query = new JPAQuery<QHistoryItemEntity>(em);
+            listItemRecorded = query.select(qHistoryItemEntity.driver, qHistoryItemEntity.startime, qHistoryItemEntity.endtime)
+                    .from(qHistoryItemEntity)
+                    .where(qHistoryItemEntity.user
+                            .eq(userName))
+                    .fetch();
+            LOG.info("Execute Query Select getHistoryItem Success");
+        } catch (Exception ex) {
+            LOG.error("Error Execute Query Select  getHistoryItem Fail : " + ex);
         }
         return listItemRecorded;
     }

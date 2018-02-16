@@ -145,6 +145,22 @@ public class RecordedTestController {
         return mav;
     }
 
+    @GetMapping("/showreports")
+    public ModelAndView showReports() {
+        LOG.info("Enter to Method to Show Reports Recorded");
+        ModelAndView mav = new ModelAndView(ViewConstant.SHOWREPORTS);
+        try {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<Tuple> query = queryDSL.getHistoryItem(user.getUsername());
+            String json = new Gson().toJson(query);
+            mav.addObject("jsonReport", json);
+
+        } catch (Exception ex) {
+            LOG.error("Error showreports " + ex);
+        }
+        return mav;
+    }
+
     @RequestMapping("/processrecords/{id}")
     public Map processRecords(@PathVariable String id) {
         LOG.info("Enter to Method to Proccess Test Recorded");
