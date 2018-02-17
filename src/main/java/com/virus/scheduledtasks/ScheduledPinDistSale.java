@@ -67,12 +67,14 @@ public class ScheduledPinDistSale {
     }
 
     private void pindDistSaleWebServices() {
-        try {
-            LOG.info("Start PindisTSale in Web Services.");
-            startPinDistSale();
-            LOG.info("End PindisTSale in Web Services.");
-        } catch (Exception ex) {
-            LOG.warning("Exception Encontuered en Proccess PinDistale in Web Services. " + ex);
+        if (scheduler) {
+            try {
+                LOG.info("Start PindisTSale in Web Services.");
+                startPinDistSale();
+                LOG.info("End PindisTSale in Web Services.");
+            } catch (Exception ex) {
+                LOG.warning("Exception Encontuered en Proccess PinDistale in Web Services. " + ex);
+            }
         }
     }
 

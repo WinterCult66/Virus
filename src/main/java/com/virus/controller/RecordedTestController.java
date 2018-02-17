@@ -15,7 +15,6 @@ import com.querydsl.core.Tuple;
 import com.virus.constant.ViewConstant;
 import com.virus.entity.AutomationRecordedDetailEntity;
 import com.virus.entity.AutomationRecordedItemEntity;
-import com.virus.entity.HistoryItemDetailEntity;
 import com.virus.entity.HistoryItemEntity;
 import com.virus.model.AjaxResponseBody;
 import com.virus.model.TokenModel;
@@ -29,10 +28,8 @@ import static com.virus.util.Util.folderNumberAleatory;
 import com.virus.repository.QueryDSL;
 import com.virus.services.AutomationRecordedItemService;
 import com.virus.services.AutomationRecorderDetailService;
-import com.virus.util.SaveDetailMultiBrowser;
 import com.virus.views.Views;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,9 +164,7 @@ public class RecordedTestController {
         Map<String, Object> detailHistory = new LinkedHashMap();
         try {
             List<Tuple> query = queryDSL.getHistoryItemDetail(id);
-
             String json = new Gson().toJson(query);
-            System.out.println(json);
             detailHistory.put("history", json);
         } catch (Exception ex) {
             LOG.error("Error showreports " + ex);

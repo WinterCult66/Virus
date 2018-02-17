@@ -56,6 +56,9 @@ public class Home {
         return ViewConstant.ADDRECORDS;
     }
 
-    
+    @GetMapping("/home/addlogin")
+    public String addlogin() {
+        return "addlogin";
+    }
 
 }
