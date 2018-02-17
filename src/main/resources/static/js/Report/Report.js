@@ -15,6 +15,7 @@ $(document).ready(function () {
         $("#tableReport").append(dataCard);
     });
     $("body").on("click", ".icon-search1", function () {
+        $("#detailEvent").empty();
         var id = ($(this).prop("id"));
         $('.ajax-loading').show(10);
         $.ajax({
@@ -22,11 +23,21 @@ $(document).ready(function () {
             url: "/records/showreportss/" + id,
             timeout: 100000
         }).success(function (msg) {
+            var jsonDetail = JSON.parse(msg.history);
+            $.each(jsonDetail, function (i) {
+                var status = jsonDetail[i].a[1];
+                if (status.toString() == "1") {
+                    classs = "icon-checkmark2  font-large-2 float-xs-right";
+                } else {
+                    classs = "icon-cross  font-large-2 float-xs-right";
+                }
+                var dataCard = "<div class='col-md-11'><span>" + jsonDetail[i].a[0] + "</span> </div><div class='col-md-1'><span><i class=" + classs + "></i></span> </div>";
+                $("#detailEvent").append(dataCard);
+            });
             $('.ajax-loading').hide(1);
-            console.log(msg);
+            $("#reportDetail").modal('show');
         });
 
     });
-})
-        ;
+});
 

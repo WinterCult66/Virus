@@ -7,7 +7,7 @@
         <meta name="description" content="Robust admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities."/>
         <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app"/>
         <meta name="author" content="PIXINVENT"/>
-        <title>Show Records</title>
+        <title>Show Reports</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="apple-touch-fullscreen" content="yes"/>
         <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
@@ -82,101 +82,32 @@
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
-    </div>   
-
-    <div class="modal fade" id="modal-2">
-        <div class="modal-dialog modal-lg">
+    </div>  
+    <div class="modal fade" id="reportDetail">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title" style="color: black;"> <i class="icon-arrow-right-c"></i>Regresion Result </h3>
-                    <hr></hr>             
-                    <p><b>Test Results:</b> here you can choose to see a graphic or see the step by step images.</p>                
-                    <div>
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="base-tab1" data-toggle="tab" aria-controls="tab1" href="#tab1" aria-expanded="true">Images</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="base-tab2" data-toggle="tab" aria-controls="tab2" href="#tab2" aria-expanded="false">Edge</a> 
-                            </li>
-                        </ul>
-                    </div>
-                </div>                                
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel17">Historic Detail</h4>
+                </div>
                 <div class="modal-body">
-                    <section id="basic-carousel">
-                        <div class="tab-content px-1 pt-1">
-                            <div class="tab-pane active" id="tab1" aria-labelledby="base-tab1">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12" style="width: 800px">
-                                        <div class="card">
-                                            <div class="card-body collapse in">                                    
-                                                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width: 840px">
-                                                    <ol id='ol' class="carousel-indicators">                                                
-                                                    </ol>
-                                                    <div class="carousel-inner" role="listbox">
-                                                        <div  id="automationImages" class="carousel-inner " role="listbox">
-                                                            <div class="carousel-caption" id="h">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                                                        <span class="icon-prev" aria-hidden="true"></span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                                                        <span class="icon-next" aria-hidden="true"></span>
-                                                        <span class="sr-only">Next</span>
-                                                    </a>
-                                                </div>                                    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
-                            <div class="tab-pane graphic1" id="tab2" aria-labelledby="base-tab2">                                
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12" style="width: 800px">
-                                        <div class="card">
-                                            <div class="card-body collapse in">                                    
-                                                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width: 840px">
-                                                    <ol id='ol2' class="carousel-indicators">                                                
-                                                    </ol>
-                                                    <div class="carousel-inner" role="listbox">
-                                                        <div  id="edgeImages" class="carousel-inner " role="listbox">
-                                                            <div class="carousel-caption" id="h">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                                                        <span class="icon-prev" aria-hidden="true"></span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                                                        <span class="icon-next" aria-hidden="true"></span>
-                                                        <span class="sr-only">Next</span>
-                                                    </a>
-                                                </div>                                    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>                              
-                            </div>
-                        </div>                        
-                    </section>
+                    <h5>Test Result</h5>
+                    <p>Here you can find a detail of the tests performed.</p>                    
+                    <div id = "detailEvent" class="row">
+                        <div class='col-md-12'><span><strong>Event</strong></span> </div>
+                        <div class='col-md-1'><span><strong>Status</strong></span> </div>
+                    </div>
 
-
-
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>                        
                 </div>
             </div>
         </div>
     </div>
-
 
 
     <script src="/resources/js/Util/jquery.min.js" type="text/javascript"></script>

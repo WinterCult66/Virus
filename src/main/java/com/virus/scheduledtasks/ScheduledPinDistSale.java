@@ -35,7 +35,7 @@ public class ScheduledPinDistSale {
 
     private static final Logger LOG = Logger.getLogger(ScheduledPinDistSale.class.getName());
 
-    @Scheduled(fixedRate = 30000)
+    @Scheduled(fixedRate = 300000000)
     public void reportCurrentTime() throws InterruptedException {
 
         loginWebServices();
@@ -92,13 +92,13 @@ public class ScheduledPinDistSale {
             ExecutorService executor = Executors.newFixedThreadPool(99);
             PinDistSaleThread worker = null;
             int invoice = randInt(100, 200);
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 300; i++) {
                 invoice++;
                 String productID = getProduct();
                 String terminalID = getTerminal();
                 worker = new PinDistSaleThread(language, "1", terminalID, "1234", productID, "1", "1234567", "" + invoice);
                 executor.execute(worker);
-                Thread.sleep(500);
+                Thread.sleep(250);
             }
             executor.shutdown();
             executor.shutdownNow();
