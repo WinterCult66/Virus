@@ -135,7 +135,10 @@ $(document).ready(function () {
                     "closeButton": true,
                     "hideAfter": 10000
                 };
-            }).done(function () {                
+            }).done(function () { 
+
+                $("#upload").attr("disabled", true);
+
             }).error(function (thrownError) {
                 console.log("ERROR From Dynamic Form: " + thrownError);
                 toastr.error('Error Send Data');

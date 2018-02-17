@@ -10,7 +10,8 @@ $(document).ready(function () {
     list = $("#list").val();
     var json = JSON.parse(list);
     $.each(json, function (i) {
-        var dataCard = "<tr><th>" + i + "</th><th>" + json[i].a[0] + "</th><th>" + json[i].a[5] + "</th><th>" + json[i].a[1] + "</th><th>" + json[i].a[2] + "</th><th><a><i id = " + json[i].a[4] + " class='icon-search1 red font-large-2 '></i></th></a></tr>";
+        var item = i+1;
+        var dataCard = "<tr><th>" + item + "</th><th>" + json[i].a[0] + "</th><th>" + json[i].a[5] + "</th><th>" + json[i].a[1] + "</th><th>" + json[i].a[2] + "</th><th><a><i id = " + json[i].a[4] + " class='icon-search1 green font-large-1 '></i></th></a></tr>";
         $("#tableReport").append(dataCard);
     });
     $("body").on("click", ".icon-search1", function () {
@@ -27,7 +28,7 @@ $("#detailEvent").append("<div class='col-md-11'><span><strong>Event</strong></s
             $.each(jsonDetail, function (i) {
                 var status = jsonDetail[i].a[1];
                 if (status.toString() == "1") {
-                    classs = "icon-checkmark2  font-large-2 float-xs-right";
+                    classs = "icon-checkmark2 red font-large-2 float-xs-right";
                 } else {
                     classs = "icon-cross  font-large-2 float-xs-right";
                 }
