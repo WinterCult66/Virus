@@ -9,13 +9,13 @@ $(document).ready(function () {
 
     list = $("#list").val();
     var json = JSON.parse(list);
-    //console.log(json);
     $.each(json, function (i) {
-        var dataCard = "<tr><th>" + i + "</th><th>" + json[i].a[0] + "</th><th>" + json[i].a[1] + "</th><th>" + json[i].a[2] + "</th><th><a><i id = " + json[i].a[4] + " class='icon-search1 red font-large-2 float-xs-right'></i></th></a></tr>";
+        var dataCard = "<tr><th>" + i + "</th><th>" + json[i].a[0] + "</th><th>" + json[i].a[5] + "</th><th>" + json[i].a[1] + "</th><th>" + json[i].a[2] + "</th><th><a><i id = " + json[i].a[4] + " class='icon-search1 red font-large-2 '></i></th></a></tr>";
         $("#tableReport").append(dataCard);
     });
     $("body").on("click", ".icon-search1", function () {
         $("#detailEvent").empty();
+$("#detailEvent").append("<div class='col-md-11'><span><strong>Event</strong></span> </div><div class='col-md-1'><span><strong>Status</strong></span> </div>");
         var id = ($(this).prop("id"));
         $('.ajax-loading').show(10);
         $.ajax({

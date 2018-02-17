@@ -130,6 +130,7 @@ public class MultiSeleniumRecordedTest implements Runnable {
             saveDetailMultiBrowser.SaveDetailBrowser(events, status, uniqueID, historyItemDetailRepository);
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "Error in captureEventInit : ", ex);
+            saveDetailMultiBrowser.SaveDetailBrowser(events, 0, uniqueID, historyItemDetailRepository);
         }
 
 //        try {

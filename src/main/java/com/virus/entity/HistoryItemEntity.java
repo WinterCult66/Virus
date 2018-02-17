@@ -22,10 +22,19 @@ public class HistoryItemEntity {
     private Integer id;
     private String user;
     private String uniqueid;
+    private String nametest;
     private String uniqueidgroup;
     private String startime;
     private String driver;
     private String endtime;
+
+    public String getNametest() {
+        return nametest;
+    }
+
+    public void setNametest(String nametest) {
+        this.nametest = nametest;
+    }
 
     public Integer getId() {
         return id;
@@ -83,13 +92,14 @@ public class HistoryItemEntity {
         this.endtime = endtime;
     }
 
-    public HistoryItemEntity(String user, String uniqueid, String uniqueidgroup, String startime, String driver, String endtime) {
+    public HistoryItemEntity(String user, String uniqueid, String uniqueidgroup, String startime, String driver, String endtime, String nametest) {
         this.user = user;
         this.uniqueid = uniqueid;
         this.uniqueidgroup = uniqueidgroup;
         this.startime = startime;
         this.driver = driver;
         this.endtime = endtime;
+        this.nametest = nametest;
     }
 
     public HistoryItemEntity() {
@@ -97,7 +107,7 @@ public class HistoryItemEntity {
 
     @Override
     public String toString() {
-        return "{" + "id=" + id + ", user=" + user + ", uniqueid=" + uniqueid + ", uniqueidgroup=" + uniqueidgroup + ", startime=" + startime + ", driver=" + driver + ", endtime=" + endtime + '}';
+        return "HistoryItemEntity{" + "user=" + user + ", uniqueid=" + uniqueid + ", nametest=" + nametest + ", uniqueidgroup=" + uniqueidgroup + ", startime=" + startime + ", driver=" + driver + ", endtime=" + endtime + '}';
     }
 
 }

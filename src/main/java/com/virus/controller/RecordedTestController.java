@@ -165,9 +165,9 @@ public class RecordedTestController {
     public Map showReportsDetail(@PathVariable String id) {
         LOG.info("Enter to Method to Show Reports Detail Recorded");
         Map<String, Object> detailHistory = new LinkedHashMap();
-        try {            
+        try {
             List<Tuple> query = queryDSL.getHistoryItemDetail(id);
-            
+
             String json = new Gson().toJson(query);
             System.out.println(json);
             detailHistory.put("history", json);
@@ -228,9 +228,10 @@ public class RecordedTestController {
 
                 for (TokenModel tokenModel : tokenList) {
                     try {
+                        String nameTest = queryDSL.getNameTest(id);
                         tokenModel.setUniqueidgroup(uniqueIDGroup);
                         HistoryItemEntity historyItemEntity = null;
-                        historyItemEntity = new HistoryItemEntity(user.getUsername(), tokenModel.getUniqueid(), tokenModel.getUniqueidgroup(), tokenModel.getStartime(), tokenModel.getDriver(), tokenModel.endtime);
+                        historyItemEntity = new HistoryItemEntity(user.getUsername(), tokenModel.getUniqueid(), tokenModel.getUniqueidgroup(), tokenModel.getStartime(), tokenModel.getDriver(), tokenModel.endtime, nameTest);
                         historyItemRepository.save(historyItemEntity);
                         LOG.info("Insert in Table HistoryItem: " + historyItemEntity.toString());
                     } catch (Exception ex) {
@@ -274,40 +275,40 @@ public class RecordedTestController {
         return responseDelete;
     }
 
-    private HashMap<String, String> addInfofromTuple(String event, String target, String param, String uniqueID) {
-        HashMap<String, String> map = new HashMap<String, String>();
-        String events;
-        try {
-            switch (event) {
-                case "1":
-                    events = "Send URL: " + target;
-                    map.put(uniqueID, events);
-                    break;
-                case "2":
-                    events = "Send Value: " + target;
-                    map.put(uniqueID, events);
-                    break;
-                case "3":
-                    events = "Click in: " + param;
-                    map.put(uniqueID, events);
-                    break;
-                case "4":
-                    events = "Sleep Time: " + target;
-                    map.put(uniqueID, events);
-                    break;
-                case "5":
-                    events = "Take photo: " + target;
-                    map.put(uniqueID, events);
-                    break;
-                case "":
-                    break;
-            }
-        } catch (Exception ex) {
-            LOG.error("Error " + ex);
-        }
-
-        return map;
-    }
+//    private HashMap<String, String> addInfofromTuple(String event, String target, String param, String uniqueID) {
+//        HashMap<String, String> map = new HashMap<String, String>();
+//        String events;
+//        try {
+//            switch (event) {
+//                case "1":
+//                    events = "Send URL: " + target;
+//                    map.put(uniqueID, events);
+//                    break;
+//                case "2":
+//                    events = "Send Value: " + target;
+//                    map.put(uniqueID, events);
+//                    break;
+//                case "3":
+//                    events = "Click in: " + param;
+//                    map.put(uniqueID, events);
+//                    break;
+//                case "4":
+//                    events = "Sleep Time: " + target;
+//                    map.put(uniqueID, events);
+//                    break;
+//                case "5":
+//                    events = "Take photo: " + target;
+//                    map.put(uniqueID, events);
+//                    break;
+//                case "":
+//                    break;
+//            }
+//        } catch (Exception ex) {
+//            LOG.error("Error " + ex);
+//        }
+//
+//        return map;
+//    }
 
     public static String getFolderSelenium(String folderSeleniumBrowser) {
         String folder = null;

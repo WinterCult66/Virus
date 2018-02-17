@@ -83,13 +83,28 @@ public class QueryDSL {
         return listItemRecorded;
     }
 
+    public String getNameTest(String UUIID) {
+        String nameTest = null;
+        try {
+            JPAQuery<QAutomationRecordedItemEntity> query = new JPAQuery<QAutomationRecordedItemEntity>(em);
+            nameTest = query.select(qAutItem.nameitem)
+                    .from(qAutItem)
+                    .where(qAutItem.keyari
+                            .eq(UUIID)).fetchOne();
+            LOG.info("Execute Query Select getNameTest Success");
+        } catch (Exception ex) {
+            LOG.error("Error Execute Query Select getNameTest " + ex);
+        }
+        return nameTest;
+    }
+
     // Method to Get History Items
     public List<Tuple> getHistoryItem(String userName) {
         List<Tuple> listItemRecorded = null;
         try {
             JPAQuery<QHistoryItemEntity> query = new JPAQuery<QHistoryItemEntity>(em);
             listItemRecorded = query.select(qHistoryItemEntity.driver, qHistoryItemEntity.startime, qHistoryItemEntity.endtime,
-                    qHistoryItemEntity.uniqueidgroup, qHistoryItemEntity.uniqueid)
+                    qHistoryItemEntity.uniqueidgroup, qHistoryItemEntity.uniqueid, qHistoryItemEntity.nametest)
                     .from(qHistoryItemEntity)
                     .where(qHistoryItemEntity.user
                             .eq(userName))
