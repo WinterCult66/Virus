@@ -17,6 +17,7 @@ import com.virus.entity.QLogin2MethodEntity;
 import com.virus.entity.QProductsSales2WSEntity;
 import com.virus.entity.QTerminalSales2WSEntity;
 import com.virus.entity.QUserr;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -149,72 +150,45 @@ public class QueryDSL {
 
     }
 
-    // Method to Get the count the Terminals
-    public int getCountTerminals() {
-        List<Tuple> listTerminal2WS = null;
-        int countTerminals = 0;
+    public List<Tuple> getTerminalsList() {
+        List<Tuple> listProducts2WS = null;
         try {
             JPAQuery<QTerminalSales2WSEntity> query = new JPAQuery<QTerminalSales2WSEntity>(em);
-            listTerminal2WS = query.select(qTerminalSales2WSEntity.terminalid, qTerminalSales2WSEntity.id)
-                    .from(qTerminalSales2WSEntity)
-                    .fetch();
-            countTerminals = listTerminal2WS.size();
+            listProducts2WS = query.select(qTerminalSales2WSEntity.terminalid, qTerminalSales2WSEntity.id)
+            .from(qTerminalSales2WSEntity).fetch();
             LOG.info("Execute Query Select getCountTerminals Success");
         } catch (Exception ex) {
             LOG.error("Error Execute Query Select getCountTerminals " + ex);
-        }
-        return countTerminals;
-
+        }        
+        return listProducts2WS;
     }
-
-    // Method to Get Terminal By ID
-    public String getTerminal2PindistSaleMethodWebServices(int id) {
-        String terminal2WS = null;
+    
+    public List<Tuple> getProductList() {
+        List<Tuple> listTerminal2WS = null;
         try {
             JPAQuery<QTerminalSales2WSEntity> query = new JPAQuery<QTerminalSales2WSEntity>(em);
-            terminal2WS = query.select(qTerminalSales2WSEntity.terminalid)
-                    .from(qTerminalSales2WSEntity)
-                    .where(qTerminalSales2WSEntity.id
-                            .eq(id)).fetchOne();
-            LOG.info("Execute Query Select getUser2LoginMethodWebServices Success");
-        } catch (Exception ex) {
-            LOG.error("Error Execute Query Select getUser2LoginMethodWebServices " + ex);
-        }
-        return terminal2WS;
-    }
-
-    // Method to Get the count the Products
-    public int getCountProducts() {
-        List<Tuple> listTerminal2WS = null;
-        int countProducts = 0;
-        try {
-            JPAQuery<QProductsSales2WSEntity> query = new JPAQuery<QProductsSales2WSEntity>(em);
             listTerminal2WS = query.select(qProductsSales2WSEntity.productid, qProductsSales2WSEntity.id)
-                    .from(qProductsSales2WSEntity)
-                    .fetch();
-            countProducts = listTerminal2WS.size();
-            LOG.info("Execute Query Select getCountProducts Success");
+            .from(qProductsSales2WSEntity).fetch();
+            LOG.info("Execute Query Select getProductList Success");
         } catch (Exception ex) {
-            LOG.error("Error Execute Query Select getCountProducts " + ex);
-        }
-        return countProducts;
-
+            LOG.error("Error Execute Query Select getProductList " + ex);
+        }        
+        return listTerminal2WS;
     }
 
-    // Method to Get Products By ID
-    public String getProduct2PindistSaleMethodWebServices(int id) {
-        String terminal2WS = null;
-        try {
-            JPAQuery<QProductsSales2WSEntity> query = new JPAQuery<QProductsSales2WSEntity>(em);
-            terminal2WS = query.select(qProductsSales2WSEntity.productid)
-                    .from(qProductsSales2WSEntity)
-                    .where(qProductsSales2WSEntity.id
-                            .eq(id)).fetchOne();
-            LOG.info("Execute Query Select getProduct2PindistSaleMethodWebServices Success");
-        } catch (Exception ex) {
-            LOG.error("Error Execute Query Select getProduct2PindistSaleMethodWebServices " + ex);
-        }
-        return terminal2WS;
-    }
-
+    // Method to Get Terminal By ID GET ONE REGISTER
+//    public String getTerminal2PindistSaleMethodWebServices(int id) {
+//        String terminal2WS = null;
+//        try {
+//            JPAQuery<QTerminalSales2WSEntity> query = new JPAQuery<QTerminalSales2WSEntity>(em);
+//            terminal2WS = query.select(qTerminalSales2WSEntity.terminalid)
+//                    .from(qTerminalSales2WSEntity)
+//                    .where(qTerminalSales2WSEntity.id
+//                            .eq(id)).fetchOne();
+//            LOG.info("Execute Query Select getUser2LoginMethodWebServices Success");
+//        } catch (Exception ex) {
+//            LOG.error("Error Execute Query Select getUser2LoginMethodWebServices " + ex);
+//        }
+//        return terminal2WS;
+//    }
 }

@@ -10,6 +10,7 @@ import com.virus.threads.LoginThread;
 import com.virus.constant.ViewConstant;
 import com.virus.controller.PinDistSaleThread;
 import com.virus.repository.QueryDSL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +36,8 @@ public class ScheduledPinDistSale {
 
     private static final Logger LOG = Logger.getLogger(ScheduledPinDistSale.class.getName());
 
-    @Scheduled(fixedRate = 300000000)
+    @Scheduled(fixedRate = 900000000)
+    // 90000 1.5 Minutes
     public void reportCurrentTime() throws InterruptedException {
 
         loginWebServices();
@@ -96,9 +98,11 @@ public class ScheduledPinDistSale {
             int invoice = randInt(100, 200);
             for (int i = 0; i < 300; i++) {
                 invoice++;
+                int phone = randInt(1111111, 9999999);
+                String phoneInt = String.valueOf(phone);
                 String productID = getProduct();
                 String terminalID = getTerminal();
-                worker = new PinDistSaleThread(language, "1", terminalID, "1234", productID, "1", "1234567", "" + invoice);
+                worker = new PinDistSaleThread(language, "1", terminalID, "1234", productID, "1", phoneInt, "" + invoice);
                 executor.execute(worker);
                 Thread.sleep(250);
             }
@@ -108,17 +112,31 @@ public class ScheduledPinDistSale {
     }
 
     private String getTerminal() {
-        int countTerminals = queryDSL.getCountTerminals();
-        int maxTerminal = countTerminals + 1;
-        String terminalID = queryDSL.getTerminal2PindistSaleMethodWebServices(randInt(1, maxTerminal));
-        return terminalID;
+        String terminal = null;
+        List<String> terminals = new ArrayList<>();
+        List<Tuple> test = queryDSL.getTerminalsList();
+        for (Tuple item : test) {
+            Object oTerminal = item.toArray()[0];
+            String terminalObject = String.valueOf(oTerminal);
+            terminals.add(terminalObject);
+        }
+        int terminalInt = randInt(0, test.size());
+        terminal = terminals.get(terminalInt);
+        return terminal;
     }
 
     private String getProduct() {
-        int countProducts = queryDSL.getCountProducts();
-        int maxProduct = countProducts + 1;
-        String productID = queryDSL.getProduct2PindistSaleMethodWebServices(randInt(1, maxProduct));
-        return productID;
+        String product = null;
+        List<String> products = new ArrayList<>();
+        List<Tuple> test = queryDSL.getProductList();
+        for (Tuple item : test) {
+            Object oTerminal = item.toArray()[0];
+            String terminalObject = String.valueOf(oTerminal);
+            products.add(terminalObject);
+        }
+        int terminalInt = randInt(0, test.size());
+        product = products.get(terminalInt);
+        return product;
     }
 
     private int randInt(int min, int max) {

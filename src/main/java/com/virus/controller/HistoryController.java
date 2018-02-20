@@ -5,17 +5,10 @@
  */
 package com.virus.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.virus.model.AjaxResponseBody;
 import com.virus.pojos.HistoryPojo;
-import com.virus.views.Views;
 import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
