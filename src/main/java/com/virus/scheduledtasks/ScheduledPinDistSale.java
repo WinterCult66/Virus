@@ -36,6 +36,8 @@ public class ScheduledPinDistSale {
     private boolean scheduler;
     private String language = "1";
     private int countTransactions = 0;
+    private int quantityTransactions = 0;
+    private String quantityTransactionss;
 
     private static final Logger LOG = Logger.getLogger(ScheduledPinDistSale.class.getName());
 
@@ -105,7 +107,8 @@ public class ScheduledPinDistSale {
             ExecutorService executor = Executors.newFixedThreadPool(99);
             PinDistSaleThread worker = null;
             int invoice = randInt(4000, 10000);
-            for (int i = 0; i < 100; i++) {
+            quantityTransactions = Integer.parseInt(quantityTransactionss);
+            for (int i = 0; i < quantityTransactions; i++) {
                 invoice++;
                 int phone = randInt(1111111, 9999999);
                 String phoneInt = String.valueOf(phone);
@@ -113,8 +116,8 @@ public class ScheduledPinDistSale {
                 String terminalID = getTerminal();
                 worker = new PinDistSaleThread(language, "1", terminalID, "1234", productID, "1", phoneInt, "" + invoice);
                 executor.execute(worker);
-                Thread.sleep(100);
-                //Thread.sleep(250);
+                //Thread.sleep(100);
+                Thread.sleep(250);
                 countTransactions++;
             }
             executor.shutdown();
@@ -160,6 +163,12 @@ public class ScheduledPinDistSale {
     public void setImageFolder(boolean scheduler) {
         this.scheduler = scheduler;
         ViewConstant.SCHEDULER_METHOD = scheduler;
+    }
+
+    @Value("${quantity.transactions}")
+    public void setQuantityTransactions(String quantityTransactionss) {
+        this.quantityTransactionss = quantityTransactionss;
+        ViewConstant.QUANTITY_TRANSACTIONS = quantityTransactionss;
     }
 
 }

@@ -30,6 +30,12 @@ public class Virus {
     private boolean scheduler;
     @Value("${fixed.rate}")
     private String fixedrate;
+    @Value("${quantity.transactions}")
+    private String quantityTransactions;
+    
+    
+    
+    
 
     public static void main(String[] args) {
 
@@ -48,6 +54,7 @@ public class Virus {
         LOG.info("# csvFolder   : {}       " + csvFolder);
         LOG.info("# scheduler   : {}       " + scheduler);
         LOG.info("# Fixedrate   : {}       " + fixedrate);
+        LOG.info("# Quantity Transactions   : {}       " + quantityTransactions);
 
     }
 }

@@ -43,5 +43,5 @@ public class ViewConstant {
     
     public static boolean SCHEDULER_METHOD;
     public static int TIME_EXECUTE;
-    
+    public static String QUANTITY_TRANSACTIONS;    
 }
