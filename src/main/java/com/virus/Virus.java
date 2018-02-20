@@ -28,6 +28,8 @@ public class Virus {
     private String seleniumEdge;
     @Value("${scheduler}")
     private boolean scheduler;
+    @Value("${fixed.rate}")
+    private String fixedrate;
 
     public static void main(String[] args) {
 
@@ -45,6 +47,7 @@ public class Virus {
         LOG.info("# Selenium Folder Firefox  : {}    " + seleniumFirefox);
         LOG.info("# csvFolder   : {}       " + csvFolder);
         LOG.info("# scheduler   : {}       " + scheduler);
+        LOG.info("# Fixedrate   : {}       " + fixedrate);
 
     }
 }

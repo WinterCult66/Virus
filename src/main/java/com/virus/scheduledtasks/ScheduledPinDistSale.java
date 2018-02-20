@@ -10,11 +10,13 @@ import com.virus.threads.LoginThread;
 import com.virus.constant.ViewConstant;
 import com.virus.controller.PinDistSaleThread;
 import com.virus.repository.QueryDSL;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,35 +35,42 @@ public class ScheduledPinDistSale {
 
     private boolean scheduler;
     private String language = "1";
+    private int countTransactions = 0;
 
     private static final Logger LOG = Logger.getLogger(ScheduledPinDistSale.class.getName());
 
-    @Scheduled(fixedRate = 900000000)
+    @Scheduled(fixedRateString = "${fixed.rate}")
     // 90000 1.5 Minutes
     public void reportCurrentTime() throws InterruptedException {
 
         loginWebServices();
         Thread.sleep(10000);
         pindDistSaleWebServices();
+        LOG.log(Level.INFO, "Finish All PinDistSale Count Transactions = {0}", countTransactions);
     }
 
     private void loginWebServices() {
         if (scheduler) {
             List<Tuple> listUser = queryDSL.getUser2LoginMethodWebServices();
             try {
-                LOG.info("Start Login Terminals in Web Services.");
-                for (Tuple item : listUser) {
-                    Object oLan = item.toArray()[0];
-                    Object oVer = item.toArray()[1];
-                    Object oUser = item.toArray()[2];
-                    Object oPass = item.toArray()[3];
-                    String lan = String.valueOf(oLan);
-                    String ver = String.valueOf(oVer);
-                    String user = String.valueOf(oUser);
-                    String pass = String.valueOf(oPass);
-                    startLogin(lan, ver, user, pass);
+                if (!listUser.isEmpty()) {
+                    LOG.info("Start Login Terminals in Web Services.");
+                    for (Tuple item : listUser) {
+                        Object oLan = item.toArray()[0];
+                        Object oVer = item.toArray()[1];
+                        Object oUser = item.toArray()[2];
+                        Object oPass = item.toArray()[3];
+                        String lan = String.valueOf(oLan);
+                        String ver = String.valueOf(oVer);
+                        String user = String.valueOf(oUser);
+                        String pass = String.valueOf(oPass);
+                        startLogin(lan, ver, user, pass);
+                    }
+                    LOG.info("Finish Login Terminals Success in Web Services.");
+                } else {
+                    LOG.info("List Empty to Login Terminals in WS.");
                 }
-                LOG.info("Finish Login Terminals Success in Web Services.");
+
             } catch (Exception ex) {
                 LOG.warning("Exception Encontuered en Login Terminals in Web Services. " + ex);
             }
@@ -95,8 +104,8 @@ public class ScheduledPinDistSale {
         if (scheduler) {
             ExecutorService executor = Executors.newFixedThreadPool(99);
             PinDistSaleThread worker = null;
-            int invoice = randInt(100, 200);
-            for (int i = 0; i < 300; i++) {
+            int invoice = randInt(4000, 10000);
+            for (int i = 0; i < 100; i++) {
                 invoice++;
                 int phone = randInt(1111111, 9999999);
                 String phoneInt = String.valueOf(phone);
@@ -104,7 +113,9 @@ public class ScheduledPinDistSale {
                 String terminalID = getTerminal();
                 worker = new PinDistSaleThread(language, "1", terminalID, "1234", productID, "1", phoneInt, "" + invoice);
                 executor.execute(worker);
-                Thread.sleep(250);
+                Thread.sleep(100);
+                //Thread.sleep(250);
+                countTransactions++;
             }
             executor.shutdown();
             executor.shutdownNow();
