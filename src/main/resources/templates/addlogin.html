@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"/>
+        <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app"/>
+        <meta name="author" content="PIXINVENT"/>
+        <title>Emida</title>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-touch-fullscreen" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+        <!-- BEGIN VENDOR CSS-->
+
+        <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <!-- font icons-->
+        <link href="/resources/css/icomoon.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/flag-icon.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/pace.css" rel="stylesheet" type="text/css"/>
+        <!-- END VENDOR CSS-->
+        <!-- BEGIN ROBUST CSS-->
+        <link href="/resources/css/bootstrap-extended.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/app.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/colors.css" rel="stylesheet" type="text/css"/>
+        <!-- END ROBUST CSS-->
+        <!-- BEGIN Page Level CSS-->
+        <link href="/resources/css/vertical-menu.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/vertical-overlay-menu.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/palette-gradient.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/palette-gradient.css" rel="stylesheet" type="text/css"/>
+        <link href="/resources/css/vertical-menu.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div class="app-content content container-fluid">
+            <div class="content-wrapper">
+                <div class="content-header row">
+                </div>
+                <div class="content-body"><section class="flexbox-container">
+                        <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1 box-shadow-2 p-0">
+                            <div class="card border-grey border-lighten-3 px-2 py-2 m-0">
+                                <div class="card-header no-border">
+                                    <div class="card-title text-xs-center">
+                                        <div class="p-1"><img src="/resources/imgs/Emida.png" alt="imgEmida" /></div>
+                                    </div>
+                                    <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Create Account</span></h6>
+                                </div>
+
+                                <div class="card-body collapse in">	
+                                    <div class="card-block">
+                                        <form class="form-horizontal form-simple" th:action="@{/logincheck}" method="POST">
+                                            <fieldset class="form-group position-relative has-icon-left mb-1">
+                                                <input type="text" class="form-control form-control-lg input-lg" id="user-name" placeholder="User Name"/>
+                                                <div class="form-control-position">
+                                                    <i class="icon-head"></i>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                <input type="password" class="form-control form-control-lg input-lg" id="user-password" placeholder="Enter Password" />
+                                                <div class="form-control-position">
+                                                    <i class="icon-key3"></i>
+                                                </div>
+                                            </fieldset>                                            
+                                            <button type="submit" class="btn btn-success btn-lg btn-block"><i class="icon-unlock2"></i> Register</button>
+                                            <a href="/">
+                                                <input type="button" class="btn btn-danger btn-lg btn-block"  value="Back" />
+                                            </a> 
+                                        </form>
+                                    </div>
+                                    <p class="text-xs-center">Emida QA 2018</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
