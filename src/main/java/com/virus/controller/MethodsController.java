@@ -49,6 +49,7 @@ public class MethodsController {
     private String imageFolder;
     private String seleniumfolder;
     private String csvfolder;
+    private String url;
     private final String on = "on";
     private final String off = "off";
 
@@ -148,7 +149,7 @@ public class MethodsController {
             ExecutorService executor = Executors.newFixedThreadPool(1);
             PinDistSaleThread worker = null;
             for (int i = 0; i < 1; i++) {
-                worker = new PinDistSaleThread(language, versionn, terminalid, clerkid, productid, amount, account, invoice);
+                worker = new PinDistSaleThread(language, versionn, terminalid, clerkid, productid, amount, account, invoice, url);
                 executor.execute(worker);
             }
 
@@ -481,6 +482,12 @@ public class MethodsController {
     public void setCSVFolder(String csvFolder) {
         this.csvfolder = csvFolder;
         ViewConstant.CSV_FOLDER = csvfolder;
+    }
+
+    @Value("${url.ws}")
+    public void setUrlWS(String url) {
+        this.url = url;
+        ViewConstant.URL_WS = url;
     }
 
 }

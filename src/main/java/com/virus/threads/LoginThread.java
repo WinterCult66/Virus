@@ -19,12 +19,14 @@ public class LoginThread implements Runnable {
     String user;
     String password;
     String xmlresponse;
+    String url;
 
-    public LoginThread(String language, String version, String user, String password) {
+    public LoginThread(String language, String version, String user, String password, String url) {
         this.language = language;
         this.version = version;
         this.user = user;
         this.password = password;
+        this.url = url;
     }
 
     @Override
@@ -33,8 +35,6 @@ public class LoginThread implements Runnable {
     }
 
     public void initLogin() {
-
-        String url = "http://192.168.2.59:8080/soap/servlet/rpcrouter";
         System.out.println(toString());
         XmlFormatter formatter = new XmlFormatter();
         FacadeLogin2 facadeLogin2 = new FacadeLogin2();

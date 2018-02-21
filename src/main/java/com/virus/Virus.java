@@ -32,10 +32,10 @@ public class Virus {
     private String fixedrate;
     @Value("${quantity.transactions}")
     private String quantityTransactions;
-    
-    
-    
-    
+    @Value("${time.between.transactions}")
+    private String timebetweentransactions;
+    @Value("${url.ws}")
+    private String urlws;
 
     public static void main(String[] args) {
 
@@ -55,6 +55,8 @@ public class Virus {
         LOG.info("# scheduler   : {}       " + scheduler);
         LOG.info("# Fixedrate   : {}       " + fixedrate);
         LOG.info("# Quantity Transactions   : {}       " + quantityTransactions);
+        LOG.info("# Delay Time in Seconds   : {}       " + timebetweentransactions);
+        LOG.info("# URL WS   : {}       " + urlws);
 
     }
 }

@@ -26,8 +26,9 @@ public class PinDistSaleThread implements Runnable {
     String account;
     String invoice;
     String xmlresponse;
+    String url;
 
-    public PinDistSaleThread(String language, String versionn, String terminalid, String clerkid, String productid, String amount, String account, String invoice) {
+    public PinDistSaleThread(String language, String versionn, String terminalid, String clerkid, String productid, String amount, String account, String invoice, String url) {
         this.language = language;
         this.versionn = versionn;
         this.terminalid = terminalid;
@@ -36,6 +37,7 @@ public class PinDistSaleThread implements Runnable {
         this.amount = amount;
         this.account = account;
         this.invoice = invoice;
+        this.url= url;
     }
 
     @Override
@@ -59,7 +61,7 @@ public class PinDistSaleThread implements Runnable {
     public void initPinDistSale() {
         try {
             LOG.info("Start PinDistSale");
-            String url = "http://192.168.2.59:8080/soap/servlet/rpcrouter";
+            //String url = "http://192.168.2.59:8080/soap/servlet/rpcrouter";
             System.out.println(toString());
             XmlFormatter formatter = new XmlFormatter();
             FacadePinDistSale facadePinDistSale = new FacadePinDistSale();

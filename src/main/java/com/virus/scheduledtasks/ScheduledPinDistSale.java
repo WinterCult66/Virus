@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +39,13 @@ public class ScheduledPinDistSale {
     private int countTransactions = 0;
     private int quantityTransactions = 0;
     private String quantityTransactionss;
+    private String timeBetweenTransactionss;
+    private int timeBetweenTransactions = 0;
+    private String url;
 
     private static final Logger LOG = Logger.getLogger(ScheduledPinDistSale.class.getName());
 
-    @Scheduled(fixedRateString = "${fixed.rate}")
+    @Scheduled(cron = "${fixed.rate}")
     // 90000 1.5 Minutes
     public void reportCurrentTime() throws InterruptedException {
 
@@ -95,7 +99,8 @@ public class ScheduledPinDistSale {
         if (scheduler) {
             ExecutorService executor = Executors.newFixedThreadPool(99);
             LoginThread worker = null;
-            worker = new LoginThread(language, version, user, pass);
+            //url, version, user, password, language
+            worker = new LoginThread(language, version, user, pass, url);
             executor.execute(worker);
             executor.shutdown();
             executor.shutdownNow();
@@ -106,7 +111,7 @@ public class ScheduledPinDistSale {
         if (scheduler) {
             ExecutorService executor = Executors.newFixedThreadPool(99);
             PinDistSaleThread worker = null;
-            int invoice = randInt(4000, 10000);
+            int invoice = randInt(1000, 100000);
             quantityTransactions = Integer.parseInt(quantityTransactionss);
             for (int i = 0; i < quantityTransactions; i++) {
                 invoice++;
@@ -114,10 +119,12 @@ public class ScheduledPinDistSale {
                 String phoneInt = String.valueOf(phone);
                 String productID = getProduct();
                 String terminalID = getTerminal();
-                worker = new PinDistSaleThread(language, "1", terminalID, "1234", productID, "1", phoneInt, "" + invoice);
+                worker = new PinDistSaleThread(language, "1", terminalID, "1234", productID, "1", phoneInt, "" + invoice, url);
                 executor.execute(worker);
                 //Thread.sleep(100);
-                Thread.sleep(250);
+                //Thread.sleep(150);
+                timeBetweenTransactions = Integer.parseInt(timeBetweenTransactionss);
+                TimeUnit.SECONDS.sleep(timeBetweenTransactions);
                 countTransactions++;
             }
             executor.shutdown();
@@ -169,6 +176,18 @@ public class ScheduledPinDistSale {
     public void setQuantityTransactions(String quantityTransactionss) {
         this.quantityTransactionss = quantityTransactionss;
         ViewConstant.QUANTITY_TRANSACTIONS = quantityTransactionss;
+    }
+
+    @Value("${time.between.transactions}")
+    public void setTimeBetweenTransactions(String timeBetweenTransactionss) {
+        this.timeBetweenTransactionss = timeBetweenTransactionss;
+        ViewConstant.TIME_BETWEEN_TRANSACTIONS = timeBetweenTransactionss;
+    }
+
+    @Value("${url.ws}")
+    public void setUrlWS(String url) {
+        this.url = url;
+        ViewConstant.URL_WS = url;
     }
 
 }
